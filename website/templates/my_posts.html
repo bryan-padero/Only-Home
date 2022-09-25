@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+{% include "account_page_template.html" %}
+<div class="col-md-9 property-grid grid">
+    <div class="row">
+        {% for property in user_properties %}
+        <div class="col-md-4 col-6 d-flex">
+            <div class="card-box-a card-shadow">
+                <div class="img-box-a">
+                    {% for img in property_img %}
+                    {% if img.property_id == property.id %}
+                    <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name ) }}" alt=""
+                         class="img-fluid img-a">
+                    {% endif %}
+                    {% if not property.images and loop.index == 1 %}
+                    <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}" alt=""
+                         class="img-fluid">
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="card-overlay">
+                    <div class="card-overlay-a-content">
+                        <div class="card-header-a">
+                            <h2 class="card-title-a">
+                                <a href="#">{{ property.property_title }}</a>
+                            </h2>
+                        </div>
+                        <div class="card-body-a">
+                            <div class="price-box d-flex">
+                                <span class="price-a">Yearly | AED {{ property.price}}</span>
+                            </div>
+                            <a href="{{ url_for('account.modify_post', property_id=property.id) }}"
+                               class="btn btn-success btn-sm">Modify</a>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop{{ property.id }}">
+                                Delete
+                            </button>
+                        </div>
+                        <div class="card-footer-a">
+                            <ul class="card-info d-flex justify-content-around">
+                                <li>
+                                    <h4 class="card-info-title">Area</h4>
+                                    <span>{{ property.area }}m
+                          <sup>2</sup>
+                        </span>
+                                </li>
+                                <li>
+                                    <h4 class="card-info-title">Beds</h4>
+                                    <span>{{ property.num_of_bed }}</span>
+                                </li>
+                                <li>
+                                    <h4 class="card-info-title">Baths</h4>
+                                    <span>{{ property.num_of_bath }}</span>
+                                </li>
+                                <li>
+                                    <h4 class="card-info-title">Garages</h4>
+                                    <span>{{ property.num_of_garage }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop{{ property.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+                 tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Delete Post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure you want to delete</p>
+                            <p><strong>{{ property.property_title }} in {{ property.location }}, {{ property.city
+                                }}</strong></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                            </button>
+                            <a type="button" href="{{ url_for('account.delete_post', property_id=property.id) }}"
+                               class="btn btn-primary">Confirm</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

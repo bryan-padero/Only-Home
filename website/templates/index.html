@@ -1,0 +1,945 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- ======= Login Section ======= -->
+<div class="click-closed"></div>
+<!--/ Form Search Star /-->
+<div class="box-collapse">
+    <div class="title-box-d">
+        <h3 class="title-d">Account</h3>
+    </div>
+    <span class="close-box-collapse right-boxed bi bi-x"></span>
+    <div class="container d-flex justify-content-center login-form">
+        <div class="row">
+            <!-- Tabs Navs -->
+            <ul class="nav nav-tabs nav-justified mb-4 pe-0" id="ex1" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link color-b active" id="tab-login" data-bs-toggle="tab"
+                       href="#tabs-login" role="tab" aria-selected="true">Login</a>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <a class="nav-link color-b" id="tab-register" data-bs-toggle="tab"
+                       href="#tabs-signup" role="tab"
+                       aria-controls="pills-signup" aria-selected="false">Register</a>
+                </li>
+            </ul>
+            <!-- Tabs Navs -->
+
+            <!-- Tabs content -->
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="tabs-login" role="tabpanel" aria-labelledby="tab-login">
+                    <form method="POST" action="{{ url_for('auth.login') }}">
+                        {{ login_form.hidden_tag() }}
+                        <div class="text-center mb-3">
+                            <p>Sign in with:</p>
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-google"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-github"></i>
+                            </button>
+                        </div>
+                        <p class="text-center">or:</p>
+                        <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            {{ login_form.email(class="form-control rounded-0") }}
+                            {{ login_form.email.label(class="form-label") }}
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            {{ login_form.password(class="form-control rounded-0") }}
+                            {{ login_form.password.label(class="form-label") }}
+                        </div>
+
+                        <!-- 2 column grid layout -->
+                        <div class="row mb-4">
+                            <div class="col-md-6 col-6 d-flex justify-content-center">
+                                <!-- Checkbox -->
+                                <div class="form-check mb-3 mb-md-0">
+                                    <input class="form-check-input rounded-0" name="remember"
+                                           style="background-color: #0f5132; border-color: #0f5132;" type="checkbox"
+                                           value="True" id="loginCheck"/>
+                                    <label class="form-check-label" for="loginCheck"> Remember me </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 col-6 d-flex justify-content-center">
+                                <!-- Simple link -->
+                                <a href="#!">Forgot password?</a>
+                            </div>
+                        </div>
+                        <!-- Submit button -->
+                        {{ login_form.submit(class_="btn btn-success w-100 mb-4 rounded-0") }}
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="tabs-signup" role="tabpanel" aria-labelledby="tab-signup">
+                    <form class="overflow-auto" method="POST" action="{{ url_for('auth.signup') }}">
+                        {{ register_form.hidden_tag() }}
+                        <div class="text-center mb-3">
+                            <p>Sign up with:</p>
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-facebook-f"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-google"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-twitter"></i>
+                            </button>
+                            <button type="button" class="btn btn-outline-success btn-floating mx-1">
+                                <i class="fab fa-github"></i>
+                            </button>
+                        </div>
+                        <p class="text-center">or:</p>
+                        <div class="container">
+                            <!-- First Name input -->
+                            <div class="form-outline mb-4">
+                                {{ register_form.first_name(class="form-control rounded-0") }}
+                                {{ register_form.first_name.label(class="form-label") }}
+                            </div>
+
+                            <!-- Last Name input -->
+                            <div class="form-outline mb-4">
+                                {{ register_form.last_name(class="form-control rounded-0") }}
+                                {{ register_form.last_name.label(class="form-label") }}
+                            </div>
+
+                            <!-- Email input -->
+                            <div class="form-outline mb-4">
+                                {{ register_form.email(class="form-control rounded-0") }}
+                                {{ register_form.email.label(class="form-label") }}
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                                {{ register_form.password(class="form-control rounded-0") }}
+                                {{ register_form.password.label(class="form-label") }}
+                            </div>
+
+                            <!-- Confirm Password input -->
+                            <div class="form-outline mb-4">
+                                {{ register_form.confirm_password(class="form-control rounded-0") }}
+                                {{ register_form.confirm_password.label(class="form-label") }}
+                            </div>
+
+                            <!-- Checkbox -->
+                            <div class="form-check d-flex justify-content-left mb-4">
+                                <input class="form-check-input me-2 rounded-0" name="terms"
+                                       style="background-color: #0f5132; border-color: #0f5132;" type="checkbox"
+                                       value="True"
+                                       id="registerCheck" required
+                                       aria-describedby="registerCheckHelpText"/>
+                                <label class="form-check-label" for="registerCheck">
+                                    I have read and agree to the terms
+                                </label>
+                            </div>
+                            <!-- Submit button -->
+                            {{ register_form.submit(class_="btn btn-success w-100 mb-3 rounded-0") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Login Section -->
+
+<div class="container-fluid bgimg d-flex justify-content-center align-items-center" style="height: 700px;">
+    <div class="container bg-white p-5 rounded-2">
+        <h1>Find Property</h1>
+        <div class="row g-2 mb-2">
+            <div class="col-md-6 col-sm-12">
+                <input type="text" class="form-control py-3 rounded-0" placeholder="Search Keyword">
+            </div>
+            <div class="col-md-3  col-6">
+                <select class="form-select py-3 rounded-0">
+                    <option value="" selected disabled>Property Type</option>
+                    <option value="1">Location 1</option>
+                    <option value="2">Location 2</option>
+                    <option value="3">Location 3</option>
+                </select>
+            </div>
+            <div class="col-md-3  col-6">
+                <select class="form-select py-3 rounded-0">
+                    <option value="" selected disabled>Beds & Baths</option>
+                    <option value="1">Location 1</option>
+                    <option value="2">Location 2</option>
+                    <option value="3">Location 3</option>
+                </select>
+            </div>
+        </div>
+        <div class="row g-2">
+            <div class="col-md-10">
+                <div class="row g-2">
+                    <div class="col-md-6 col-6">
+                        <input type="text" class="form-control py-3 rounded-0" placeholder="Search Keyword">
+                    </div>
+                    <div class="col-md-3 col-3">
+                        <select id="multipleSelect" multiple name="amenities" data-search="true"
+                                data-silent-initial-value-set="true">
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                            <option value="3">Option 3</option>
+                            <option value="1">Location 1</option>
+                            <option value="2">Location 2</option>
+                            <option value="3">Location 3</option>
+                            <option value="1">Location 1</option>
+                            <option value="2">Location 2</option>
+                            <option value="3">Location 3</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 col-3">
+                        <select class="form-select py-3 rounded-0">
+                            <option value="" selected disabled>Property Type</option>
+                            <option value="1">Location 1</option>
+                            <option value="2">Location 2</option>
+                            <option value="3">Location 3</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <button class="btn btn-success border-0 w-100 py-3 rounded-0">Search</button>
+            </div>
+        </div>
+    </div>
+</div>
+<main id="main">
+
+    <!-- ======= Services Section ======= -->
+    <section class="section-services section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Our Services</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-box-c foo">
+                        <div class="card-header-c d-flex">
+                            <div class="card-box-ico">
+                                <span class="bi bi-cart"></span>
+                            </div>
+                            <div class="card-title-c align-self-center">
+                                <h2 class="title-c">Lifestyle</h2>
+                            </div>
+                        </div>
+                        <div class="card-body-c">
+                            <p class="content-c">
+                                Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent
+                                sapien
+                                massa,
+                                convallis a pellentesque
+                                nec, egestas non nisi.
+                            </p>
+                        </div>
+                        <div class="card-footer-c">
+                            <a href="#" class="link-c link-icon">Read more
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-box-c foo">
+                        <div class="card-header-c d-flex">
+                            <div class="card-box-ico">
+                                <span class="bi bi-calendar4-week"></span>
+                            </div>
+                            <div class="card-title-c align-self-center">
+                                <h2 class="title-c">Loans</h2>
+                            </div>
+                        </div>
+                        <div class="card-body-c">
+                            <p class="content-c">
+                                Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit.
+                                Mauris blandit
+                                aliquet elit, eget tincidunt
+                                nibh pulvinar a.
+                            </p>
+                        </div>
+                        <div class="card-footer-c">
+                            <a href="#" class="link-c link-icon">Read more
+                                <span class="bi bi-calendar4-week"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-box-c foo">
+                        <div class="card-header-c d-flex">
+                            <div class="card-box-ico">
+                                <span class="bi bi-card-checklist"></span>
+                            </div>
+                            <div class="card-title-c align-self-center">
+                                <h2 class="title-c">Sell</h2>
+                            </div>
+                        </div>
+                        <div class="card-body-c">
+                            <p class="content-c">
+                                Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent
+                                sapien
+                                massa,
+                                convallis a pellentesque
+                                nec, egestas non nisi.
+                            </p>
+                        </div>
+                        <div class="card-footer-c">
+                            <a href="#" class="link-c link-icon">Read more
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Services Section -->
+
+    <!-- ======= Latest Properties Section ======= -->
+    <section class="section-property section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Latest Properties</h2>
+                        </div>
+                        <div class="title-link">
+                            <a href="property-grid.html">All Property
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="property-carousel" class="swiper">
+                <div class="swiper-wrapper">
+
+                    <div class="carousel-item-b swiper-slide">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/property-6.jpg') }}" alt=""
+                                     class="img-a img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="property-single.html">206 Mount
+                                                <br/> Olive Road Two</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            <span class="price-a">rent | $ 12.000</span>
+                                        </div>
+                                        <a href="#" class="link-a">Click here to view
+                                            <span class="bi bi-chevron-right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>340m
+                            <sup>2</sup>
+                          </span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>2</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>4</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Garages</h4>
+                                                <span>1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-b swiper-slide">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/property-3.jpg') }}" alt=""
+                                     class="img-a img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="property-single.html">157 West
+                                                <br/> Central Park</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            <span class="price-a">rent | $ 12.000</span>
+                                        </div>
+                                        <a href="property-single.html" class="link-a">Click here to view
+                                            <span class="bi bi-chevron-right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>340m
+                            <sup>2</sup>
+                          </span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>2</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>4</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Garages</h4>
+                                                <span>1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-b swiper-slide">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/property-7.jpg') }}" alt=""
+                                     class="img-a img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="property-single.html">245 Azabu
+                                                <br/> Nishi Park let</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            <span class="price-a">rent | $ 12.000</span>
+                                        </div>
+                                        <a href="property-single.html" class="link-a">Click here to view
+                                            <span class="bi bi-chevron-right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>340m
+                            <sup>2</sup>
+                          </span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>2</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>4</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Garages</h4>
+                                                <span>1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-b swiper-slide">
+                        <div class="card-box-a card-shadow">
+                            <div class="img-box-a">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/property-10.jpg') }}" alt=""
+                                     class="img-a img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-overlay-a-content">
+                                    <div class="card-header-a">
+                                        <h2 class="card-title-a">
+                                            <a href="property-single.html">204 Montal
+                                                <br/> South Bela Two</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-body-a">
+                                        <div class="price-box d-flex">
+                                            <span class="price-a">rent | $ 12.000</span>
+                                        </div>
+                                        <a href="property-single.html" class="link-a">Click here to view
+                                            <span class="bi bi-chevron-right"></span>
+                                        </a>
+                                    </div>
+                                    <div class="card-footer-a">
+                                        <ul class="card-info d-flex justify-content-around">
+                                            <li>
+                                                <h4 class="card-info-title">Area</h4>
+                                                <span>340m
+                            <sup>2</sup>
+                          </span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Beds</h4>
+                                                <span>2</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Baths</h4>
+                                                <span>4</span>
+                                            </li>
+                                            <li>
+                                                <h4 class="card-info-title">Garages</h4>
+                                                <span>1</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+                </div>
+            </div>
+            <div class="propery-carousel-pagination carousel-pagination"></div>
+
+        </div>
+    </section><!-- End Latest Properties Section -->
+
+    <!-- ======= Agents Section ======= -->
+    <section class="section-agents section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Best Agents</h2>
+                        </div>
+                        <div class="title-link">
+                            <a href="agents-grid.html">All Agents
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-box-d">
+                        <div class="card-img-d">
+                            <img src="{{ url_for('static', filename='assets/img/page_images/agent-4.jpg') }}" alt=""
+                                 class="img-d img-fluid">
+                        </div>
+                        <div class="card-overlay card-overlay-hover">
+                            <div class="card-header-d">
+                                <div class="card-title-d align-self-center">
+                                    <h3 class="title-d">
+                                        <a href="agent-single.html" class="link-two">Margaret Sotillo
+                                            <br> Escala</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card-body-d">
+                                <p class="content-d color-text-a">
+                                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                                </p>
+                                <div class="info-agents color-a">
+                                    <p>
+                                        <strong>Phone: </strong> +54 356 945234
+                                    </p>
+                                    <p>
+                                        <strong>Email: </strong> agents@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer-d">
+                                <div class="socials-footer d-flex justify-content-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-box-d">
+                        <div class="card-img-d">
+                            <img src="{{ url_for('static', filename='assets/img/page_images/agent-1.jpg') }}" alt=""
+                                 class="img-d img-fluid">
+                        </div>
+                        <div class="card-overlay card-overlay-hover">
+                            <div class="card-header-d">
+                                <div class="card-title-d align-self-center">
+                                    <h3 class="title-d">
+                                        <a href="agent-single.html" class="link-two">Stiven Spilver
+                                            <br> Darw</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card-body-d">
+                                <p class="content-d color-text-a">
+                                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                                </p>
+                                <div class="info-agents color-a">
+                                    <p>
+                                        <strong>Phone: </strong> +54 356 945234
+                                    </p>
+                                    <p>
+                                        <strong>Email: </strong> agents@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer-d">
+                                <div class="socials-footer d-flex justify-content-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-box-d">
+                        <div class="card-img-d">
+                            <img src="{{ url_for('static', filename='assets/img/page_images/agent-5.jpg') }}" alt=""
+                                 class="img-d img-fluid">
+                        </div>
+                        <div class="card-overlay card-overlay-hover">
+                            <div class="card-header-d">
+                                <div class="card-title-d align-self-center">
+                                    <h3 class="title-d">
+                                        <a href="agent-single.html" class="link-two">Emma Toledo
+                                            <br> Cascada</a>
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="card-body-d">
+                                <p class="content-d color-text-a">
+                                    Sed porttitor lectus nibh, Cras ultricies ligula sed magna dictum porta two.
+                                </p>
+                                <div class="info-agents color-a">
+                                    <p>
+                                        <strong>Phone: </strong> +54 356 945234
+                                    </p>
+                                    <p>
+                                        <strong>Email: </strong> agents@example.com
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card-footer-d">
+                                <div class="socials-footer d-flex justify-content-center">
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-facebook" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-twitter" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-instagram" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <a href="#" class="link-one">
+                                                <i class="bi bi-linkedin" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- End Agents Section -->
+
+    <!-- ======= Latest News Section ======= -->
+    <section class="section-news section-t8">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Latest News</h2>
+                        </div>
+                        <div class="title-link">
+                            <a href="blog-grid.html">All News
+                                <span class="bi bi-chevron-right"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="news-carousel" class="swiper">
+                <div class="swiper-wrapper">
+
+                    <div class="carousel-item-c swiper-slide">
+                        <div class="card-box-b card-shadow news-box">
+                            <div class="img-box-b">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/post-2.jpg') }}" alt=""
+                                     class="img-b img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-header-b">
+                                    <div class="card-category-b">
+                                        <a href="#" class="category-b">House</a>
+                                    </div>
+                                    <div class="card-title-b">
+                                        <h2 class="title-2">
+                                            <a href="blog-single.html">House is comming
+                                                <br> new</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-date">
+                                        <span class="date-b">18 Sep. 2017</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-c swiper-slide">
+                        <div class="card-box-b card-shadow news-box">
+                            <div class="img-box-b">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/post-5.jpg') }}" alt=""
+                                     class="img-b img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-header-b">
+                                    <div class="card-category-b">
+                                        <a href="#" class="category-b">Travel</a>
+                                    </div>
+                                    <div class="card-title-b">
+                                        <h2 class="title-2">
+                                            <a href="blog-single.html">Travel is comming
+                                                <br> new</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-date">
+                                        <span class="date-b">18 Sep. 2017</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-c swiper-slide">
+                        <div class="card-box-b card-shadow news-box">
+                            <div class="img-box-b">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/post-7.jpg') }}" alt=""
+                                     class="img-b img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-header-b">
+                                    <div class="card-category-b">
+                                        <a href="#" class="category-b">Park</a>
+                                    </div>
+                                    <div class="card-title-b">
+                                        <h2 class="title-2">
+                                            <a href="blog-single.html">Park is comming
+                                                <br> new</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-date">
+                                        <span class="date-b">18 Sep. 2017</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-c swiper-slide">
+                        <div class="card-box-b card-shadow news-box">
+                            <div class="img-box-b">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/post-3.jpg') }}" alt=""
+                                     class="img-b img-fluid">
+                            </div>
+                            <div class="card-overlay">
+                                <div class="card-header-b">
+                                    <div class="card-category-b">
+                                        <a href="#" class="category-b">Travel</a>
+                                    </div>
+                                    <div class="card-title-b">
+                                        <h2 class="title-2">
+                                            <a href="#">Travel is comming
+                                                <br> new</a>
+                                        </h2>
+                                    </div>
+                                    <div class="card-date">
+                                        <span class="date-b">18 Sep. 2017</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                </div>
+            </div>
+
+            <div class="news-carousel-pagination carousel-pagination"></div>
+        </div>
+    </section><!-- End Latest News Section -->
+
+    <!-- ======= Testimonials Section ======= -->
+    <section class="section-testimonials section-t8 nav-arrow-a">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title-wrap d-flex justify-content-between">
+                        <div class="title-box">
+                            <h2 class="title-a">Testimonials</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="testimonial-carousel" class="swiper">
+                <div class="swiper-wrapper">
+
+                    <div class="carousel-item-a swiper-slide">
+                        <div class="testimonials-box">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="testimonial-img">
+                                        <img src="{{ url_for('static', filename='assets/img/page_images/testimonial-1.jpg') }}"
+                                             alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="testimonial-ico">
+                                        <i class="bi bi-chat-quote-fill"></i>
+                                    </div>
+                                    <div class="testimonials-content">
+                                        <p class="testimonial-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis,
+                                            cupiditate
+                                            ea nam praesentium
+                                            debitis hic ber quibusdam
+                                            voluptatibus officia expedita corpori.
+                                        </p>
+                                    </div>
+                                    <div class="testimonial-author-box">
+                                        <img src="{{ url_for('static', filename='assets/img/page_images/mini-testimonial-1.jpg') }}"
+                                             alt="" class="testimonial-avatar">
+                                        <h5 class="testimonial-author">Albert & Erika</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                    <div class="carousel-item-a swiper-slide">
+                        <div class="testimonials-box">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="testimonial-img">
+                                        <img src="{{ url_for('static', filename='assets/img/page_images/testimonial-2.jpg') }}"
+                                             alt="" class="img-fluid">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="testimonial-ico">
+                                        <i class="bi bi-chat-quote-fill"></i>
+                                    </div>
+                                    <div class="testimonials-content">
+                                        <p class="testimonial-text">
+                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis,
+                                            cupiditate
+                                            ea nam praesentium
+                                            debitis hic ber quibusdam
+                                            voluptatibus officia expedita corpori.
+                                        </p>
+                                    </div>
+                                    <div class="testimonial-author-box">
+                                        <img src="{{ url_for('static', filename='assets/img/page_images/mini-testimonial-2.jpg') }}"
+                                             alt="" class="testimonial-avatar">
+                                        <h5 class="testimonial-author">Pablo & Emma</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- End carousel item -->
+
+                </div>
+            </div>
+            <div class="testimonial-carousel-pagination carousel-pagination"></div>
+
+        </div>
+    </section><!-- End Testimonials Section -->
+
+</main><!-- End #main -->
+
+{% endblock content %}

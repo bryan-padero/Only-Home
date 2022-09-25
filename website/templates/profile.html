@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "account_page_template.html" %}
+<div class="col-md-9">
+    <form class="row g-3" method="POST" action="{{ url_for('account.update_profile') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="col-md-12">
+            {% if not current_user.profile_pic %}
+            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:300x;height:300px;" src="{{ url_for('static', filename='assets/img/profile_pictures/blank-profile-picture.png') }}" />
+            {% else %}
+            {% set img_dir = current_user.profile_pic %}
+            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:280px;height:280px;" src="{{ url_for('static', filename='assets/img/profile_pictures/' + img_dir) }}" />
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            {{ form.email.label(class_="label") }} {{ form.email(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.profile_pic.label(class_="label") }} {{ form.profile_pic(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.first_name.label(class_="label") }} {{ form.first_name(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.last_name.label(class_="label") }} {{ form.last_name(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.mobile.label(class_="label") }} {{ form.mobile(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.birthdate.label(class_="label") }} {{ form.birthdate(class_="form-control") }}
+        </div>
+        <div class="col-md-6">
+            {{ form.submit(class_="form-control btn btn-success") }}
+        </div>
+    </form>
+</div>
+{% endblock content %}

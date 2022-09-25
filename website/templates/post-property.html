@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+{% include "account_page_template.html" %}
+<div class="col-md-9">
+    <form class="row g-3" method="POST" action="{{ url_for('account.post_property') }}" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="col-md-12">
+            {{ form.title.label(class="form-label") }} {{ form.title(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
+            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.floor_plan.label(class_="form-label") }} {{ form.floor_plan(class_="form-control") }}
+        </div>
+        <div class="col-md-8">
+            {{ form.images.label(class_="form-label") }} {{ form.images(class_="form-control") }}
+        </div>
+        <div class="col-md-2">
+            {{ form.type.label(class="form-label") }} {{ form.type(class_="form-control") }}
+        </div>
+        <div class="col-md-3">
+            {{ form.city.label(class="form-label") }} {{ form.city(class_="form-control") }}
+        </div>
+        <div class="col-md-7">
+            {{ form.location.label(class="form-label") }} {{ form.location(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
+            {{ form.video_url.label(class_="form-label") }} {{ form.video_url(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
+            {{ form.map_url.label(class_="form-label") }} {{ form.map_url(class_="form-control") }}
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Mobile</label>
+            <input type="text" class="form-control" disabled>
+        </div>
+        <div class="col-md-4">
+            {{ form.price.label(class="form-label") }} {{ form.price(class_="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.payment_mode.label(class="form-label") }} {{ form.payment_mode(class_="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.furnishing.label(class="form-label") }} {{ form.furnishing(class_="form-control") }}
+        </div>
+        <div class="col-md-2">
+            {{ form.area.label(class="form-label") }} {{ form.area(class_="form-control") }}
+        </div>
+        <div class="col-md-2">
+            {{ form.num_of_bed.label(class="form-label") }} {{ form.num_of_bed(class_="form-control") }}
+        </div>
+        <div class="col-md-2">
+            {{ form.num_of_bath.label(class="form-label") }} {{ form.num_of_bath(class_="form-control") }}
+        </div>
+        <div class="col-md-2">
+            {{ form.num_of_garage.label(class="form-label") }} {{ form.num_of_garage(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
+            {{ form.amenity.label(class="form-label") }} {{ form.amenity(class_="form-control") }}
+        </div>
+        <div class="col-md-4 col-12">
+            {{ form.submit(class_="form-control btn btn-success" ) }}
+        </div>
+    </form>
+</div>
+{% endblock content %}
