@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Casa Amor - {{ title_page }}</title>
+    <title>OnlyHome - {{ title_page }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -39,7 +39,7 @@
                 aria-controls="navbarDefault" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa-sharp fa-solid fa-bars fa-lg"></i>
         </button>
-        <a class="navbar-brand text-brand" href="{{ url_for('account.index') }}">Casa<span class="color-b">Amor</span></a>
+        <a class="navbar-brand text-brand" href="{{ url_for('account.index') }}">Only<span class="color-b">Home</span></a>
         <div class="navbar-collapse collapse justify-content-center" id="navbarDefault">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -73,7 +73,7 @@
         {% if current_user.is_authenticated %}
 
         <div class="d-flex justify-content-end">
-            <a class="btn btn-lg color-b" href="{{ url_for('account.update_profile') }}"><i
+            <a class="ps-0 btn btn-lg color-b" href="{{ url_for('account.update_profile') }}"><i
                     class="fa-solid fa-user fa-xl"></i></a>
             <a href="{{ url_for('auth.logout') }}" type="button" class="btn btn-lg color-b">
                 <i class="fa-solid fa-power-off fa-xl"></i></a>
@@ -107,7 +107,7 @@
             <div class="col-sm-12 col-md-4">
                 <div class="widget-a">
                     <div class="w-header-a">
-                        <h3 class="w-title-a text-brand">EstateAgency</h3>
+                        <h3 class="w-title-a text-brand">OnlyHome</h3>
                     </div>
                     <div class="w-body-a">
                         <p class="w-text-a color-text-a">
@@ -241,7 +241,7 @@
                 <div class="copyright-footer">
                     <p class="copyright color-text-a">
                         &copy; Copyright
-                        <span class="color-a">EstateAgency</span> All Rights Reserved.
+                        <span class="color-a">OnlyHome</span> All Rights Reserved.
                     </p>
                 </div>
             </div>

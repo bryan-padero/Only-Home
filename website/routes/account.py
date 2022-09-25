@@ -150,7 +150,7 @@ def modify_post():
     property_to_update_id = request.args.get("property_id")
     property_to_update = Property.query.filter_by(id=property_to_update_id).first()
     property_to_update_img = ImageSet.query.filter_by(property_id=property_to_update_id).all()
-    print(property_to_update_img)
+    property_to_update_amenities = Amenity.query.filter_by(property_id=property_to_update_id).all()
     form = PropertyForm(title=property_to_update.property_title,
                         description=property_to_update.description,
                         floor_plan=property_to_update.floor_plan,
@@ -167,7 +167,11 @@ def modify_post():
                         num_of_garage=property_to_update.num_of_garage,
                         furnishing=property_to_update.furnishing,
                         )
-    if request.method == "POST":
+    form.images.data = [property_img.image_name for property_img in property_to_update_img]
+    print(form.images.data)
+    form.amenity.data = [property_amenity.amenity_name for property_amenity in property_to_update_amenities]
+    print(form.amenity.data)
+    if form.validate_on_submit():
         property_to_update = Property(owner=current_user,
                                       property_title=form.title.data,
                                       description=form.description.data,
@@ -186,7 +190,10 @@ def modify_post():
                                       )
         form.images.data = property_to_update_img if property_to_update_img else ""
         print(form.images.data)
+        form.amenity.data = [property_amenity.name for property_amenity in property_to_update_amenities]
+        print(form.amenity.data)
         property_to_update.modified_at = datetime.now()
         db.session.commit()
         flash("Property Updated", "success")
-    return render_template("modify_post.html", form=form, title_page="Modify Post")
+    return render_template("modify_post.html", form=form,property_to_update=property_to_update,
+                           property_to_update_img=property_to_update_img, title_page="Modify Post")

@@ -4,12 +4,12 @@
 <div class="col-md-9">
     <form class="row g-3" method="POST" action="{{ url_for('account.update_profile') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
-        <div class="col-md-12">
+        <div class="col-md-12 d-flex justify-content-center">
             {% if not current_user.profile_pic %}
-            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:300x;height:300px;" src="{{ url_for('static', filename='assets/img/profile_pictures/blank-profile-picture.png') }}" />
+            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:250x;height:300px;" src="{{ url_for('static', filename='assets/img/profile_pictures/blank-profile-picture.png') }}" />
             {% else %}
             {% set img_dir = current_user.profile_pic %}
-            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:280px;height:280px;" src="{{ url_for('static', filename='assets/img/profile_pictures/' + img_dir) }}" />
+            <img class="img-fluid mb-4 img-thumbnail rounded-circle" style="width:250px;height:300px;" src="{{ url_for('static', filename='assets/img/profile_pictures/' + img_dir) }}" />
             {% endif %}
         </div>
         <div class="col-md-6">
