@@ -30,13 +30,17 @@
                             <div class="price-box d-flex">
                                 <span class="price-a">Yearly | AED {{ property.price}}</span>
                             </div>
-                            <a href="{{ url_for('account.modify_post', property_id=property.id) }}"
-                               class="btn btn-success btn-sm">Modify</a>
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop{{ property.id }}">
-                                Delete
-                            </button>
+                            <div class="d-flex justify-content-start mt-2">
+                                <form method="POST"
+                                      action="{{ url_for('account.modify_post', property_id=property.id) }}">
+                                    <button type="submit" class="btn btn-success btn-sm me-2">Modify</button>
+                                </form>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{ property.id }}">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                         <div class="card-footer-a">
                             <ul class="card-info d-flex justify-content-around">
@@ -64,7 +68,8 @@
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop{{ property.id }}" data-bs-backdrop="static" data-bs-keyboard="false"
+            <div class="modal fade" id="staticBackdrop{{ property.id }}" data-bs-backdrop="static"
+                 data-bs-keyboard="false"
                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" data-backdrop="false">
                 <div class="modal-dialog">
                     <div class="modal-content">

@@ -4,8 +4,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from datetime import datetime
 from werkzeug.utils import secure_filename
 from website.forms import *
-from website.models.property import ImageSet, Amenity, Property
-from website.models.user import User
+from website.models.property import *
+from website.models.user import *
 from website import db
 import os
 
@@ -147,6 +147,46 @@ def delete_post():
 @account.route("/modify_post", methods=["POST", "GET"])
 @login_required
 def modify_post():
-    property_id = request.args.get("property_id")
-    flash("Property Updated", "success")
-    return redirect(url_for("account.my_posts"))
+    property_to_update_id = request.args.get("property_id")
+    property_to_update = Property.query.filter_by(id=property_to_update_id).first()
+    property_to_update_img = ImageSet.query.filter_by(property_id=property_to_update_id).all()
+    print(property_to_update_img)
+    form = PropertyForm(title=property_to_update.property_title,
+                        description=property_to_update.description,
+                        floor_plan=property_to_update.floor_plan,
+                        type=property_to_update.property_type,
+                        city=property_to_update.city,
+                        location=property_to_update.location,
+                        map_url=property_to_update.map_url,
+                        video_url=property_to_update.video_url,
+                        price=property_to_update.price,
+                        payment_mode=property_to_update.payment_mode,
+                        area=property_to_update.area,
+                        num_of_bed=property_to_update.num_of_bed,
+                        num_of_bath=property_to_update.num_of_bath,
+                        num_of_garage=property_to_update.num_of_garage,
+                        furnishing=property_to_update.furnishing,
+                        )
+    if request.method == "POST":
+        property_to_update = Property(owner=current_user,
+                                      property_title=form.title.data,
+                                      description=form.description.data,
+                                      property_type=form.type.data,
+                                      city=form.city.data,
+                                      location=form.location.data,
+                                      video_url=form.video_url.data,
+                                      map_url=form.map_url.data,
+                                      price=form.price.data,
+                                      payment_mode=form.payment_mode.data,
+                                      furnishing=form.furnishing.data,
+                                      area=form.area.data,
+                                      num_of_bed=form.num_of_bed.data,
+                                      num_of_bath=form.num_of_bath.data,
+                                      num_of_garage=form.num_of_garage.data,
+                                      )
+        form.images.data = property_to_update_img if property_to_update_img else ""
+        print(form.images.data)
+        property_to_update.modified_at = datetime.now()
+        db.session.commit()
+        flash("Property Updated", "success")
+    return render_template("modify_post.html", form=form, title_page="Modify Post")
