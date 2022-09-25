@@ -27,7 +27,7 @@ def save_image(image_file, img_dir):
     return image_name
 
 
-@account.route("/post-property", methods=["POST", "GET"])
+@account.route("/post_property", methods=["POST", "GET"])
 @login_required
 def post_property():
     form = PropertyForm()
@@ -56,6 +56,7 @@ def post_property():
             image_file = save_image(floor_plan_file, img_dir)
             new_property.floor_plan = image_file
             db.session.commit()
+        print(form.images.data)
         if form.images.data:
             img_dir = "property_images"
             for image in form.images.data:
@@ -72,7 +73,7 @@ def post_property():
                 db.session.commit()
         flash("Property has been submitted for verification", "success")
         return redirect(url_for('account.post_property'))
-    return render_template("post-property.html", form=form, title_page="Post Property")
+    return render_template("post_property.html", form=form, title_page="Post Property")
 
 
 @account.route("/update_profile", methods=["POST", "GET"])
@@ -153,7 +154,6 @@ def modify_post():
     property_to_update_amenities = Amenity.query.filter_by(property_id=property_to_update_id).all()
     form = PropertyForm(title=property_to_update.property_title,
                         description=property_to_update.description,
-                        floor_plan=property_to_update.floor_plan,
                         type=property_to_update.property_type,
                         city=property_to_update.city,
                         location=property_to_update.location,
@@ -167,10 +167,7 @@ def modify_post():
                         num_of_garage=property_to_update.num_of_garage,
                         furnishing=property_to_update.furnishing,
                         )
-    form.images.data = [property_img.image_name for property_img in property_to_update_img]
-    print(form.images.data)
     form.amenity.data = [property_amenity.amenity_name for property_amenity in property_to_update_amenities]
-    print(form.amenity.data)
     if form.validate_on_submit():
         property_to_update = Property(owner=current_user,
                                       property_title=form.title.data,
@@ -188,12 +185,28 @@ def modify_post():
                                       num_of_bath=form.num_of_bath.data,
                                       num_of_garage=form.num_of_garage.data,
                                       )
-        form.images.data = property_to_update_img if property_to_update_img else ""
-        print(form.images.data)
-        form.amenity.data = [property_amenity.name for property_amenity in property_to_update_amenities]
-        print(form.amenity.data)
+        if form.floor_plan.data:
+            img_dir = "property_images"
+            floor_plan_file = form.floor_plan.data
+            image_file = save_image(floor_plan_file, img_dir)
+            property_to_update.floor_plan = image_file
+            db.session.commit()
+        if form.images.data:
+            img_dir = "property_images"
+            for image in form.images.data:
+                image_file = save_image(image, img_dir)
+                new_image = ImageSet(image_name=image_file,
+                                     property_image=property_to_update)
+                db.session.add(new_image)
+                db.session.commit()
+        if form.amenity.data:
+            for amenity in form.amenity.data:
+                new_amenity = Amenity(amenity_name=amenity,
+                                      property_amenity=property_to_update)
+                db.session.add(new_amenity)
+                db.session.commit()
         property_to_update.modified_at = datetime.now()
         db.session.commit()
         flash("Property Updated", "success")
-    return render_template("modify_post.html", form=form,property_to_update=property_to_update,
+    return render_template("modify_post.html", form=form, property_to_update=property_to_update,
                            property_to_update_img=property_to_update_img, title_page="Modify Post")
