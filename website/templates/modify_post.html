@@ -83,10 +83,10 @@
             {% endif %}
             {{ form.images.label(class_="form-label pt-2") }} {{ form.images(class_="form-control pt-2") }}
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             {{ form.type.label(class="form-label") }} {{ form.type(class_="form-control") }}
         </div>
-        <div class="col-md-3">
+        <div class="col-6 col-md-3">
             {{ form.city.label(class="form-label") }} {{ form.city(class_="form-control") }}
         </div>
         <div class="col-md-6">
@@ -94,7 +94,7 @@
         </div>
         <div class="col-md-12">
             <div class="container-fluid px-0">
-                <div class="row">
+                <div class="row px-2">
                     {{ property_to_update.video_url | safe }}
                 </div>
             </div>
@@ -102,13 +102,13 @@
         </div>
         <div class="col-md-12">
             <div class="container-fluid px-0">
-                <div class="row">
-                    {{ property_to_update.map_url | safe }}"
+                <div class="row px-2">
+                    {{ property_to_update.map_url | safe }}
                 </div>
                 {{ form.map_url.label(class_="form-label pt-2") }} {{ form.map_url(class_="form-control pt-2") }}
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-6 col-md-4">
             {% if current_user.mobile %}
             <label class="form-label">Mobile</label>
             <input type="text" name="mobile" class="form-control" value="{{ current_user.mobile }}" disabled>
@@ -117,25 +117,25 @@
             <input type="text" name="mobile" class="form-control" disabled>
             {% endif %}
         </div>
-        <div class="col-md-4">
+        <div class="col-6 col-md-4">
             {{ form.price.label(class="form-label") }} {{ form.price(class_="form-control") }}
         </div>
-        <div class="col-md-4">
+        <div class="col-6 col-md-4">
             {{ form.payment_mode.label(class="form-label") }} {{ form.payment_mode(class_="form-control") }}
         </div>
-        <div class="col-md-4">
+        <div class="col-6 col-md-4">
             {{ form.furnishing.label(class="form-label") }} {{ form.furnishing(class_="form-control") }}
         </div>
-        <div class="col-md-2">
+        <div class="col-6 col-md-2">
             {{ form.area.label(class="form-label") }} {{ form.area(class_="form-control") }}
         </div>
-        <div class="col-md-2">
+        <div class="col-6 col-md-2">
             {{ form.num_of_bed.label(class="form-label") }} {{ form.num_of_bed(class_="form-control") }}
         </div>
-        <div class="col-md-2">
+        <div class="col-6 col-md-2">
             {{ form.num_of_bath.label(class="form-label") }} {{ form.num_of_bath(class_="form-control") }}
         </div>
-        <div class="col-md-2">
+        <div class="col-6 col-md-2">
             {{ form.num_of_garage.label(class="form-label") }} {{ form.num_of_garage(class_="form-control") }}
         </div>
         <div class="col-md-12">

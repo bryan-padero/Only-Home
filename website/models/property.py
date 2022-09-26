@@ -24,6 +24,7 @@ class Property(db.Model):
     num_of_garage = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.now)
     modified_at = db.Column(db.DateTime(timezone=True))
+    is_verified = db.Column(db.Boolean, default=False)
     images = db.relationship("ImageSet", backref="property_image")
     amenities = db.relationship("Amenity", backref="property_amenity")
 
