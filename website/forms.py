@@ -41,11 +41,6 @@ class PropertyForm(FlaskForm):
     types = [("", "Please select"), ("Villa", "Villa"), ("Apartment", "Apartment")]
     cities = [("", "Please select"), ("Abu Dhabi", "Abu Dhabi"), ("Dubai", "Dubai"), ("Al Ain", "Al Ain"),
               ("Sharjah", "Sharjah"), ("Ajman", "Ajman"), ("Fujairah", "Fujairah"), ("Umm Al Quwain", "Umm Al Quwain")]
-    amenities = ["Central A/C & Heating", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
-                 "Security", "Covered Parking", "Prayer Room", "Satellite/Cable TV","View of Water", "Day Care Center",
-                 "Service Elevators", "ATM Facility", "Kids Play Area","Reception/Waiting Room", "Maintenance Staff",
-                 "CCTV Security", "Cafeteria or Canteen","Cleaning Services", "Maids Room", "Lobby in Building",
-                 "Waste Disposal"]
     payment_modes = [("", "Please select"), ("Monthly", "Monthly"), ("Quarterly", "Quarterly"),
                      ("Bi-Yearly", "Bi-Yearly"), ("Yearly", "Yearly")]
     furnishings = [("", "Please select"), ("Unfurnished", "Unfurnished"), ("Furnished", "Furnished"),
@@ -66,5 +61,4 @@ class PropertyForm(FlaskForm):
     num_of_garage = IntegerField("Garages", validators=[DataRequired()])
     furnishing = SelectField("Furnishings", choices=furnishings, validators=[DataRequired()])
     images = MultipleFileField("Upload Images", validators=[FileAllowed(['jpg', 'png'])])
-    amenity = SelectMultipleField("Amenities", choices=amenities)
     submit = SubmitField("Submit")

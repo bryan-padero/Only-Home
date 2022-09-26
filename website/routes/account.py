@@ -12,6 +12,12 @@ import os
 
 account = Blueprint("account", __name__)
 
+AMENITY_LISTS = ["Central A/C & Heating", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
+                 "Security", "Covered Parking", "Prayer Room", "Satellite/Cable TV", "View of Water", "Day Care Center",
+                 "Service Elevators", "ATM Facility", "Kids Play Area", "Reception/Waiting Room", "Maintenance Staff",
+                 "CCTV Security", "Cafeteria or Canteen","Cleaning Services", "Maids Room", "Lobby in Building",
+                 "Waste Disposal"]
+
 
 @account.route("/")
 def index():
@@ -167,24 +173,22 @@ def modify_post():
                         num_of_garage=property_to_update.num_of_garage,
                         furnishing=property_to_update.furnishing,
                         )
-    form.amenity.data = [property_amenity.amenity_name for property_amenity in property_to_update_amenities]
     if form.validate_on_submit():
-        property_to_update = Property(owner=current_user,
-                                      property_title=form.title.data,
-                                      description=form.description.data,
-                                      property_type=form.type.data,
-                                      city=form.city.data,
-                                      location=form.location.data,
-                                      video_url=form.video_url.data,
-                                      map_url=form.map_url.data,
-                                      price=form.price.data,
-                                      payment_mode=form.payment_mode.data,
-                                      furnishing=form.furnishing.data,
-                                      area=form.area.data,
-                                      num_of_bed=form.num_of_bed.data,
-                                      num_of_bath=form.num_of_bath.data,
-                                      num_of_garage=form.num_of_garage.data,
-                                      )
+        property_to_update.property_title = form.title.data
+        property_to_update.description = form.description.data
+        property_to_update.property_type = form.type.data
+        property_to_update.city = form.city.data
+        property_to_update.location = form.location.data
+        property_to_update.video_url = form.video_url.data
+        property_to_update.map_url = form.map_url.data
+        property_to_update.price = form.price.data
+        property_to_update.payment_mode = form.payment_mode.data
+        property_to_update.furnishing = form.furnishing.data
+        property_to_update.area = form.area.data
+        property_to_update.num_of_bed = form.num_of_bed.data
+        property_to_update.num_of_bath = form.num_of_bath.data
+        property_to_update.num_of_garage = form.num_of_garage.data
+        db.session.commit()
         if form.floor_plan.data:
             img_dir = "property_images"
             floor_plan_file = form.floor_plan.data
@@ -192,21 +196,25 @@ def modify_post():
             property_to_update.floor_plan = image_file
             db.session.commit()
         if form.images.data:
-            img_dir = "property_images"
-            for image in form.images.data:
-                image_file = save_image(image, img_dir)
-                new_image = ImageSet(image_name=image_file,
-                                     property_image=property_to_update)
-                db.session.add(new_image)
-                db.session.commit()
-        if form.amenity.data:
-            for amenity in form.amenity.data:
-                new_amenity = Amenity(amenity_name=amenity,
-                                      property_amenity=property_to_update)
-                db.session.add(new_amenity)
-                db.session.commit()
+            try:
+                img_dir = "property_images"
+                for image in form.images.data:
+                    image_file = save_image(image, img_dir)
+                    new_image = ImageSet(image_name=image_file,
+                                         property_image=property_to_update)
+                    db.session.add(new_image)
+                    db.session.commit()
+            except FileNotFoundError:
+                pass
+        # if form.amenity.data:
+        #     for amenity in form.amenity.data:
+        #         if amenity not in property_to_update_amenities:
+        #             new_amenity = Amenity(amenity_name=amenity,
+        #                                   property_amenity=property_to_update)
+        #             db.session.add(new_amenity)
         property_to_update.modified_at = datetime.now()
         db.session.commit()
         flash("Property Updated", "success")
-    return render_template("modify_post.html", form=form, property_to_update=property_to_update,
-                           property_to_update_img=property_to_update_img, title_page="Modify Post")
+        redirect(url_for('account.my_posts', title_page="My Posts"))
+    return render_template("modify_post.html", form=form, property_to_update=property_to_update, title_page="Modify Post",
+                           property_to_update_img=property_to_update_img, amenity_lists=AMENITY_LISTS)
