@@ -141,11 +141,11 @@
         <div class="col-md-12">
             <div class="container-fluid px-0">
                 <p>Amenities</p>
-                <div class="row g-2 d-flex align-content-start flex-wrap">
+                <div class="row g-2 form-group">
                     {% for item in amenity_lists %}
-                    <div class="col-1 col-md-1 w-25">
-                        <input class="form-check-input" type="checkbox" value="{{ item}} " id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">{{ item }}</label>
+                    <div class="col-6 col-md-4 form-check-inline mx-0 ">
+                        <input class="form-check-input" name="amenity" type="checkbox" value="{{ item}} " id="flexCheckDefault">
+                        <label class="form-check-label text-sm-end" for="flexCheckDefault">{{ item }}</label>
                     </div>
                     {% endfor %}
                 </div>

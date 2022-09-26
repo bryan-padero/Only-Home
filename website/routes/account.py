@@ -173,6 +173,7 @@ def modify_post():
                         num_of_garage=property_to_update.num_of_garage,
                         furnishing=property_to_update.furnishing,
                         )
+
     if form.validate_on_submit():
         property_to_update.property_title = form.title.data
         property_to_update.description = form.description.data
