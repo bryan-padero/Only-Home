@@ -9,7 +9,7 @@
             {{ form.title.label(class="form-label") }} {{ form.title(class_="form-control") }}
         </div>
         <div class="col-md-12">
-            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control") }}
+            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control", style="height: 15rem;") }}
         </div>
         <div class="col-md-4">
             {{ form.floor_plan.label(class_="form-label") }} {{ form.floor_plan(class_="form-control") }}
@@ -63,7 +63,17 @@
             {{ form.num_of_garage.label(class="form-label") }} {{ form.num_of_garage(class_="form-control") }}
         </div>
         <div class="col-md-12">
-            {{ form.amenity.label(class="form-label") }} {{ form.amenity(class_="form-control") }}
+            <div class="container-fluid px-0">
+                <p>Amenities</p>
+                <div class="row g-2 form-group">
+                    {% for item in amenity_list %}
+                    <div class="col-6 col-md-4 form-check-inline mx-0 ">
+                        <input class="form-check-input" name="amenity" type="checkbox" value="{{ item}} " id="flexCheckDefault">
+                        <label class="form-check-label text-sm-end" for="flexCheckDefault">{{ item }}</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
         </div>
         <div class="col-md-4 col-12">
             {{ form.submit(class_="form-control btn btn-success" ) }}
