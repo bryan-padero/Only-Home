@@ -12,11 +12,11 @@ import os
 
 account = Blueprint("account", __name__)
 
-AMENITY_LIST = ["Central A/C & Heating", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
+AMENITY_LIST = ["Central A/C", "Central Heating", "Chiller Free", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
                  "Security", "Covered Parking", "Prayer Room", "Satellite/Cable TV", "View of Water", "Day Care Center",
-                 "Service Elevators", "ATM Facility", "Kids Play Area", "Reception/Waiting Room", "Maintenance Staff",
+                 "Service Elevators", "ATM Facility", "Kids Play Area", "Reception", "Maintenance Staff",
                  "CCTV Security", "Cafeteria or Canteen","Cleaning Services", "Maids Room", "Lobby in Building",
-                 "Waste Disposal"]
+                 "Waste Disposal", "Womens Pool", "Womens Gym", "Shared Sauna"]
 
 
 @account.route("/")
@@ -62,21 +62,24 @@ def post_property():
             image_file = save_image(floor_plan_file, img_dir)
             new_property.floor_plan = image_file
             db.session.commit()
-        print(form.images.data)
         if form.images.data:
-            img_dir = "property_images"
-            for image in form.images.data:
-                image_file = save_image(image, img_dir)
-                new_image = ImageSet(image_name=image_file,
-                                     property_image=new_property)
-                db.session.add(new_image)
+            try:
+                img_dir = "property_images"
+                for image in form.images.data:
+                    image_file = save_image(image, img_dir)
+                    new_image = ImageSet(image_name=image_file,
+                                         property_image=new_property)
+                    db.session.add(new_image)
+                    db.session.commit()
+            except FileNotFoundError:
+                pass
+        checked_amenity = request.form.getlist("amenity")
+        if checked_amenity:
+            for amenity in checked_amenity:
+                new_amenity = Amenity(amenity_name=amenity,
+                                      property_amenity=new_property)
+                db.session.add(new_amenity)
                 db.session.commit()
-        # if form.amenity.data:
-        #     for amenity in form.amenity.data:
-        #         new_amenity = Amenity(amenity_name=amenity,
-        #                               property_amenity=new_property)
-        #         db.session.add(new_amenity)
-        #         db.session.commit()
         flash("Property has been submitted for verification", "success")
         return redirect(url_for('account.post_property'))
     return render_template("post_property.html", form=form, title_page="Post Property", amenity_list=AMENITY_LIST)
