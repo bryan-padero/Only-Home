@@ -34,7 +34,7 @@ class ChangePasswordForm(FlaskForm):
     old_password = PasswordField("Old Password", validators=[DataRequired(), Length(min=8, max=20)])
     new_password = PasswordField("New Password", validators=[DataRequired(), Length(min=8, max=20)])
     confirm_new_password = PasswordField("Confirm New Password", validators=[DataRequired()])
-    submit = SubmitField("Update")
+    submit = SubmitField("Submit")
 
 
 class PropertyForm(FlaskForm):

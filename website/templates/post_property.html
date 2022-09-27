@@ -9,7 +9,8 @@
             {{ form.title.label(class="form-label") }} {{ form.title(class_="form-control") }}
         </div>
         <div class="col-md-12">
-            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control", style="height: 15rem;") }}
+            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control", style="height:
+            15rem;") }}
         </div>
         <div class="col-md-4">
             {{ form.floor_plan.label(class_="form-label") }} {{ form.floor_plan(class_="form-control") }}
@@ -26,19 +27,13 @@
         <div class="col-md-6">
             {{ form.location.label(class="form-label") }} {{ form.location(class_="form-control") }}
         </div>
-        <div class="col-md-12">
-            {{ form.video_url.label(class_="form-label") }} {{ form.video_url(class_="form-control") }}
-        </div>
-        <div class="col-md-12">
-            {{ form.map_url.label(class_="form-label") }} {{ form.map_url(class_="form-control") }}
-        </div>
         <div class="col-md-4">
             {% if current_user.mobile %}
             <label class="form-label">Mobile</label>
-            <input type="text" name="mobile" class="form-control" value="{{ current_user.mobile }}"disabled>
+            <input type="text" name="mobile" class="form-control" value="{{ current_user.mobile }}" disabled>
             {% else %}
             <label class="form-label">Mobile</label>
-            <input type="text" name="mobile" class="form-control"disabled>
+            <input type="text" name="mobile" class="form-control" disabled>
             {% endif %}
         </div>
         <div class="col-md-4">
@@ -63,12 +58,19 @@
             {{ form.num_of_garage.label(class="form-label") }} {{ form.num_of_garage(class_="form-control") }}
         </div>
         <div class="col-md-12">
+            {{ form.video_url.label(class_="form-label") }} {{ form.video_url(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
+            {{ form.map_url.label(class_="form-label") }} {{ form.map_url(class_="form-control") }}
+        </div>
+        <div class="col-md-12">
             <div class="container-fluid px-0">
                 <p>Amenities</p>
                 <div class="row g-2 form-group">
                     {% for item in amenity_list %}
                     <div class="col-6 col-md-4 form-check-inline mx-0 ">
-                        <input class="form-check-input form" name="amenity" type="checkbox" value="{{ item }} " id="flexCheckDefault">
+                        <input class="form-check-input form" name="amenity" type="checkbox" value="{{ item }} "
+                               id="flexCheckDefault">
                         <label class="form-check-label text-sm-end" for="flexCheckDefault">{{ item }}</label>
                     </div>
                     {% endfor %}

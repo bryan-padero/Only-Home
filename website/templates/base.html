@@ -59,13 +59,13 @@
         {% if current_user.is_authenticated %}
 
         <div class="d-flex justify-content-end">
-            <a class="ps-0 btn btn-lg color-b" href="{{ url_for('account.update_profile') }}"><i
+            <a class="ps-0 btn btn-md color-b" href="{{ url_for('account.update_profile') }}"><i
                     class="fa-solid fa-user fa-xl"></i></a>
-            <a href="{{ url_for('auth.logout') }}" type="button" class="btn btn-lg color-b">
+            <a href="{{ url_for('auth.logout') }}" type="button" class="btn btn-md color-b pe-0">
                 <i class="fa-solid fa-power-off fa-xl"></i></a>
         </div>
         {% else %}
-        <button type="button" class="btn btn-lg color-b navbar-toggle-box navbar-toggle-box-collapse"
+        <button type="button" class="btn btn-md color-b navbar-toggle-box navbar-toggle-box-collapse"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarTogglerDemo01">
             <i class="fa-solid fa-user fa-xl"></i>

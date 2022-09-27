@@ -11,11 +11,11 @@
                     {% for img in property_img %}
                     {% if img.property_id == property.id %}
                     <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name ) }}" alt=""
-                         class="img-fluid card-img rounded-0" style="height:20rem;">
+                         class="img-fluid card-img rounded-0" style="height:22rem;">
                     {% endif %}
                     {% if not property.images and loop.index == 1 %}
                     <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}" alt=""
-                         class="img-fluid card-img img-thumbnail rounded-0" style="height:20rem;">
+                         class="img-fluid card-img img-thumbnail rounded-0" style="height:22rem;">
                     {% endif %}
                     {% endfor %}
                 </a>
