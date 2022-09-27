@@ -5,20 +5,22 @@
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ url_for('account.index') }}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ title_page }}</li>
+                    <li class="breadcrumb-item active text-success" aria-current="page">{{ title_page }}</li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-6 col-6 justify-content-start d-flex pt-2">
-                    <h1>{{ title_page }}</h1>
+                    <h2>{{ title_page }}</h2>
                 </div>
                 {% if not title_page == "Post Property" %}
                 <div class="col-md-6 col-6 justify-content-end d-flex">
-                    <a class="btn btn-success btn-lg lh-lg"
-                       href="{{ url_for('account.post_property', title='Post Property') }}">Post
-                        Property</a>
+                    <div>
+                        <a class="btn btn-success btn-lg"
+                           href="{{ url_for('account.post_property', title='Post Property') }}">Post
+                            Ad</a>
+                    </div>
                 </div>
                 {% endif %}
             </div>
@@ -41,13 +43,13 @@
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-column">
                             <li class="nav-item">
                                 <a class="nav-link active pt-0" aria-current="page"
-                                   href="{{ url_for('account.update_profile') }}">Profile</a>
+                                   href="{{ url_for('account.update_profile') }}"><h5>Profile</h5></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('account.change_password') }}">Change Password</a>
+                                <a class="nav-link" href="{{ url_for('account.change_password') }}"><h5>Change Password</h5></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('account.my_posts') }}">My Posts</a>
+                                <a class="nav-link" href="{{ url_for('account.my_posts') }}"><h5>My Posts</h5></a>
                             </li>
                         </ul>
                     </div>

@@ -2,68 +2,49 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% block content %}
 {% include "account_page_template.html" %}
-<div class="col-md-9 property-grid grid">
-    <div class="row">
+<div class="col-md-9">
+    <div class="row g-3">
         {% for property in user_properties %}
-        <div class="col-md-4 col-6 d-flex">
-            <div class="card-box-a card-shadow">
-                <div class="img-box-a">
+        <div class="col-md-4 col-6">
+            <div class="card rounded-0">
+                <a href="#">
                     {% for img in property_img %}
                     {% if img.property_id == property.id %}
                     <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name ) }}" alt=""
-                         class="img-fluid img-a">
+                         class="img-fluid card-img rounded-0" style="height:15rem;">
                     {% endif %}
                     {% if not property.images and loop.index == 1 %}
                     <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}" alt=""
-                         class="img-fluid">
+                         class="img-fluid card-img img-thumbnail rounded-0" style="height:15rem;">
                     {% endif %}
                     {% endfor %}
-                </div>
-                <div class="card-overlay">
-                    <div class="card-overlay-a-content">
-                        <div class="card-header-a">
-                            <h2 class="card-title-a">
-                                <a href="#">{{ property.property_title }}</a>
-                            </h2>
-                        </div>
-                        <div class="card-body-a">
-                            <div class="price-box d-flex">
-                                <span class="price-a">Yearly | AED {{ property.price}}</span>
-                            </div>
-                            <div class="d-flex justify-content-start mt-2">
-                                <form method="POST"
-                                      action="{{ url_for('account.modify_post', property_id=property.id) }}">
-                                    <button type="submit" class="btn btn-success btn-sm me-2">Modify</button>
-                                </form>
-                                <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#staticBackdrop{{ property.id }}">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-footer-a">
-                            <ul class="card-info d-flex justify-content-around">
-                                <li>
-                                    <h4 class="card-info-title">Area</h4>
-                                    <span>{{ property.area }}m
-                          <sup>2</sup>
-                        </span>
-                                </li>
-                                <li>
-                                    <h4 class="card-info-title">Beds</h4>
-                                    <span>{{ property.num_of_bed }}</span>
-                                </li>
-                                <li>
-                                    <h4 class="card-info-title">Baths</h4>
-                                    <span>{{ property.num_of_bath }}</span>
-                                </li>
-                                <li>
-                                    <h4 class="card-info-title">Garages</h4>
-                                    <span>{{ property.num_of_garage }}</span>
-                                </li>
-                            </ul>
-                        </div>
+                </a>
+
+                <div class=" card-body bg-light">
+                    <h5 class="card-title">
+                        <a href="#" class="text-success">{{ property.property_title }}</a>
+                    </h5>
+                    <h6 class="card-subtitle mb-2">{{ property.location }}, {{ property.city }}</h6>
+                    <div class="card-footer border-0 bg-light ps-0 pt-0 text-dark">
+                        {{ property.num_of_bed }} <i class="fa-solid fa-bed fa-md"></i>
+                        {{ property.num_of_bath }} <i class="fa-solid fa-bath fa-md"></i>
+                        {{ property.num_of_garage }} <i class="fa-solid fa-car fa-md"></i>
+                        {{ property.area }}m<sup>2</sup> <i class="fa-solid fa-ruler-combined fa-md"></i>
+                    </div>
+                    <div class="text-dark">
+                        <i class="fa-solid fa-dollar-sign fa-md"></i>{{ property.price }}
+                        <i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}
+                    </div>
+                    <div class="d-flex justify-content-start mt-2">
+                        <form method="POST"
+                              action="{{ url_for('account.modify_post', property_id=property.id) }}">
+                            <button type="submit" class="btn btn-outline-success btn-sm me-2">Modify</button>
+                        </form>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{ property.id }}">
+                            Delete
+                        </button>
                     </div>
                 </div>
             </div>

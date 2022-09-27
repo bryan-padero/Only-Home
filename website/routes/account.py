@@ -12,7 +12,7 @@ import os
 
 account = Blueprint("account", __name__)
 
-AMENITY_LISTS = ["Central A/C & Heating", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
+AMENITY_LIST = ["Central A/C & Heating", "Balcony", "Private Gym", "Shared Pool", "Pets Allowed", "Private Garden",
                  "Security", "Covered Parking", "Prayer Room", "Satellite/Cable TV", "View of Water", "Day Care Center",
                  "Service Elevators", "ATM Facility", "Kids Play Area", "Reception/Waiting Room", "Maintenance Staff",
                  "CCTV Security", "Cafeteria or Canteen","Cleaning Services", "Maids Room", "Lobby in Building",
@@ -71,15 +71,15 @@ def post_property():
                                      property_image=new_property)
                 db.session.add(new_image)
                 db.session.commit()
-        if form.amenity.data:
-            for amenity in form.amenity.data:
-                new_amenity = Amenity(amenity_name=amenity,
-                                      property_amenity=new_property)
-                db.session.add(new_amenity)
-                db.session.commit()
+        # if form.amenity.data:
+        #     for amenity in form.amenity.data:
+        #         new_amenity = Amenity(amenity_name=amenity,
+        #                               property_amenity=new_property)
+        #         db.session.add(new_amenity)
+        #         db.session.commit()
         flash("Property has been submitted for verification", "success")
         return redirect(url_for('account.post_property'))
-    return render_template("post_property.html", form=form, title_page="Post Property")
+    return render_template("post_property.html", form=form, title_page="Post Property", amenity_list=AMENITY_LIST)
 
 
 @account.route("/update_profile", methods=["POST", "GET"])
@@ -216,6 +216,23 @@ def modify_post():
         property_to_update.modified_at = datetime.now()
         db.session.commit()
         flash("Property Updated", "success")
-        redirect(url_for('account.my_posts', title_page="My Posts"))
+        return redirect(url_for('account.my_posts', title_page="My Posts"))
     return render_template("modify_post.html", form=form, property_to_update=property_to_update, title_page="Modify Post",
-                           property_to_update_img=property_to_update_img, amenity_lists=AMENITY_LISTS)
+                           property_to_update_img=property_to_update_img, amenity_list=AMENITY_LIST)
+
+
+@account.route("/delete_item", methods=["POST", "GET"])
+@login_required
+def delete_item():
+    item_to_delete_id = request.args.get("item_id")
+    img_to_delete_id = request.args.get("img_id")
+    item_to_delete = Property.query.filter_by(id=item_to_delete_id).first()
+    img_to_delete = ImageSet.query.filter_by(id=img_to_delete_id).first()
+    if item_to_delete_id:
+        item_to_delete.floor_plan = ""
+        flash("Post Floor Plan Deleted", "success")
+    if img_to_delete:
+        db.session.delete(img_to_delete)
+        flash(f"Post {img_to_delete.image_name} Deleted", "success")
+    db.session.commit()
+    return redirect(url_for("account.my_posts", title_page="My Posts"))
