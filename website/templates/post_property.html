@@ -68,10 +68,15 @@
                 <p>Amenities</p>
                 <div class="row g-2 form-group">
                     {% for item in amenity_list %}
-                    <div class="col-6 col-md-4 form-check-inline mx-0 ">
-                        <input class="form-check-input form" name="amenity" type="checkbox" value="{{ item }} "
-                               id="flexCheckDefault">
-                        <label class="form-check-label text-sm-end" for="flexCheckDefault">{{ item }}</label>
+                    <div class="col-6 col-md-4 form-check-inline mx-0">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item p-0 border-0">
+                                <input class="form-check-input" name="amenity" type="checkbox"
+                                       value="{{ item }}" id="flexCheckDefault{{ item }}">
+                                <label class="form-check-label stretched-link" for="flexCheckDefault{{ item }}">
+                                    {{ item }}</label>
+                            </li>
+                        </ul>
                     </div>
                     {% endfor %}
                 </div>

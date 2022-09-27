@@ -23,12 +23,15 @@
                     <h4 class="card-title">
                         <a href="#" class="text-success">{{ property.property_title }}</a>
                     </h4>
-                    <p class="text-dark card-subtitle mb-2 fs-6"><i class="fa-solid fa-location-dot"></i> {{ property.location }}, {{ property.city }}</p>
+                    <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
+                        property.location }}, {{ property.city }}</p>
                     <div class="card-footer border-0 bg-light p-0 text-dark">
-                        <i class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
-                        <i class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
-                        <i class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
-                        <i class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area }}m<sup>2</sup>
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item border-0 ps-0 py-0"><i class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}</li>
+                            <li class="list-group-item border-0 py-0"><i class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}</li>
+                            <li class="list-group-item border-0 py-0"><i class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}</li>
+                            <li class="list-group-item border-0 py-0"><i class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area }}m<sup>2</sup></li>
+                        </ul>
                     </div>
                     <div class="text-dark">
                         <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
