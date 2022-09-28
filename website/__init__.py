@@ -23,10 +23,12 @@ def create_app():
     from website.routes.account import account
     from website.routes.auth import auth
     from website.routes.api import api
+    from website.routes.page import page
 
     app.register_blueprint(account, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     app.register_blueprint(api, url_prefix='/')
+    app.register_blueprint(page, url_prefix='/')
 
     from .models.user import User
 
