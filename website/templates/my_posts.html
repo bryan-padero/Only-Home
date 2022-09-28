@@ -7,7 +7,7 @@
         {% for property in user_properties %}
         <div class="col-md-4 col-12">
             <div class="card rounded-0">
-                <a href="#">
+                <a href="{{ url_for('page.property_page', property_id=property.id) }}">
                     {% for img in property_img %}
                     {% if img.property_id == property.id %}
                     <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name ) }}" alt=""
@@ -21,7 +21,7 @@
                 </a>
                 <div class=" card-body bg-light">
                     <h4 class="card-title">
-                        <a href="#" class="text-success">{{ property.property_title }}</a>
+                        <a href="{{ url_for('page.property_page', property_id=property.id) }}" class="text-success">{{ property.property_title }}</a>
                     </h4>
                     <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
                         property.location }}, {{ property.city }}</p>
