@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask_login import login_required, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from datetime import datetime
 from werkzeug.utils import secure_filename
 from website.forms import *
 from website.models.property import *

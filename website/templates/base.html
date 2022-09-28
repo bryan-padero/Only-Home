@@ -77,7 +77,17 @@
 {% with messages = get_flashed_messages(with_categories=true) %}
 {% if messages %}
 {% for category, message in messages %}
-<p class="alert {{ category }} alert-{{ category }} text-center mb-0 rounded-0" role="alert">{{ message }}</p>
+{% if category == 'success' %}
+<div class="alert alert-success alert-dismissible fade show text-center mb-0 rounded-0" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% else %}
+<div class="alert alert-danger alert-dismissible fade show text-center mb-0 rounded-0" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endif%}
 {% endfor %}
 {% endif %}
 {% endwith %}
@@ -257,6 +267,12 @@
       placeholder: 'Amenities',
       searchByStartsWith: true, // Search options by startsWith() method
     });
+
+
+
+
+
+
 
 
 
