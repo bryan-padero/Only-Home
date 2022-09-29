@@ -100,12 +100,12 @@
             <hr>
             <div class="row">
                 <table class="table table-borderless">
-                    <tbody>
                     <thead>
                     <tr>
                         <td><h3 class="text-success">Property Details</h3></td>
                     </tr>
                     </thead>
+                    <tbody>
                     <tr>
                         <td>Property Type</td>
                         <td>{{ selected_property.property_type }}</td>
@@ -122,10 +122,12 @@
                         <td>Posted on</td>
                         <td>{{ selected_property.created_at.strftime('%d-%b-%Y') }}</td>
                     </tr>
+                     {% if selected_property.modified_at: %}
                     <tr>
                         <td>Updated</td>
                         <td>{{ selected_property.modified_at.strftime('%d-%b-%Y %H:%M') }}</td>
                     </tr>
+                    {% endif %}
                     </tbody>
                 </table>
             </div>
