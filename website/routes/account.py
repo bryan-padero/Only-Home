@@ -117,6 +117,7 @@ def update_user_profile(form):
     current_user.email = form.email.data
     current_user.mobile = form.mobile.data
     current_user.birthdate = form.birthdate.data
+    db.session.commit()
 
 
 def update_profile_pic(form):
@@ -124,6 +125,7 @@ def update_profile_pic(form):
     new_profile_pic = form.profile_pic.data
     image_file = save_image(new_profile_pic, img_dir)
     current_user.profile_pic = image_file
+    db.session.commit()
 
 
 @account.route("/update_profile", methods=["POST", "GET"])

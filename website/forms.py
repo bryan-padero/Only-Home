@@ -62,3 +62,12 @@ class PropertyForm(FlaskForm):
     furnishing = SelectField("Furnishings", choices=furnishings, validators=[DataRequired()])
     images = MultipleFileField("Upload Images", validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField("Submit")
+
+
+class PropertyPageForm(FlaskForm):
+    message = TextAreaField("Message", validators=[DataRequired()])
+    name = StringField("Name", validators=[DataRequired()])
+    email = StringField("Email", validators=[DataRequired()])
+    mobile = TelField("Mobile Number", validators=[DataRequired()])
+    submit = SubmitField("Inquire Now")
+
