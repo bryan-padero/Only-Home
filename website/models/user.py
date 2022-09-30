@@ -1,5 +1,6 @@
 from website import db
 from flask_login import UserMixin
+from website.models.inquiry import *
 from sqlalchemy.sql import func
 from datetime import datetime
 
@@ -15,7 +16,7 @@ class User(UserMixin, db.Model):
     profile_pic = db.Column(db.String(100))
     mobile = db.Column(db.String(100))
     property = db.relationship("Property", backref="owner")
-    inquiry = db.relationship("User", backref="inquirer")
+    inquiry = db.relationship("Inquiry", backref="inquirer")
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.now)
     modified_at = db.Column(db.DateTime(timezone=True))
 
