@@ -28,6 +28,8 @@ class Property(db.Model):
     images = db.relationship("ImageSet", backref="property_image")
     amenities = db.relationship("Amenity", backref="property_amenity")
     inquiries = db.relationship("Inquiry", backref="property_inquiry")
+    reviewers = db.relationship("MyReview", backref="property_reviewer")
+    reviewees = db.relationship("UserReview", backref="property_reviewee")
 
 
 class Amenity(db.Model):
