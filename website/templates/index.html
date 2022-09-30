@@ -214,321 +214,106 @@
     </div>
 </div>
 <main id="main">
-
-    <!-- ======= Services Section ======= -->
-    <section class="section-services section-t8">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="title-wrap d-flex justify-content-between">
-                        <div class="title-box">
-                            <h2 class="title-a">Our Services</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card-box-c foo">
-                        <div class="card-header-c d-flex">
-                            <div class="card-box-ico">
-                                <span class="bi bi-cart"></span>
-                            </div>
-                            <div class="card-title-c align-self-center">
-                                <h2 class="title-c">Lifestyle</h2>
-                            </div>
-                        </div>
-                        <div class="card-body-c">
-                            <p class="content-c">
-                                Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent
-                                sapien
-                                massa,
-                                convallis a pellentesque
-                                nec, egestas non nisi.
-                            </p>
-                        </div>
-                        <div class="card-footer-c">
-                            <a href="#" class="link-c link-icon">Read more
-                                <span class="bi bi-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card-box-c foo">
-                        <div class="card-header-c d-flex">
-                            <div class="card-box-ico">
-                                <span class="bi bi-calendar4-week"></span>
-                            </div>
-                            <div class="card-title-c align-self-center">
-                                <h2 class="title-c">Loans</h2>
-                            </div>
-                        </div>
-                        <div class="card-body-c">
-                            <p class="content-c">
-                                Nulla porttitor accumsan tincidunt. Curabitur aliquet quam id dui posuere blandit.
-                                Mauris blandit
-                                aliquet elit, eget tincidunt
-                                nibh pulvinar a.
-                            </p>
-                        </div>
-                        <div class="card-footer-c">
-                            <a href="#" class="link-c link-icon">Read more
-                                <span class="bi bi-calendar4-week"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card-box-c foo">
-                        <div class="card-header-c d-flex">
-                            <div class="card-box-ico">
-                                <span class="bi bi-card-checklist"></span>
-                            </div>
-                            <div class="card-title-c align-self-center">
-                                <h2 class="title-c">Sell</h2>
-                            </div>
-                        </div>
-                        <div class="card-body-c">
-                            <p class="content-c">
-                                Sed porttitor lectus nibh. Cras ultricies ligula sed magna dictum porta. Praesent
-                                sapien
-                                massa,
-                                convallis a pellentesque
-                                nec, egestas non nisi.
-                            </p>
-                        </div>
-                        <div class="card-footer-c">
-                            <a href="#" class="link-c link-icon">Read more
-                                <span class="bi bi-chevron-right"></span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section><!-- End Services Section -->
-
     <!-- ======= Latest Properties Section ======= -->
-    <section class="section-property section-t8">
+    <section>
         <div class="container">
+            <h1>Latest Properties</h1>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="title-wrap d-flex justify-content-between">
-                        <div class="title-box">
-                            <h2 class="title-a">Latest Properties</h2>
-                        </div>
-                        <div class="title-link">
-                            <a href="property-grid.html">All Property
-                                <span class="bi bi-chevron-right"></span>
-                            </a>
+                {% for property in all_properties %}
+                <div class="col-md-4 col-12">
+                    <div class="card rounded-0">
+                        <a href="{{ url_for('page.property_page', property_id=property.id) }}">
+                            {% if property.images %}
+                            <div id="carouselExampleControls{{property.id}}" class="carousel slide carousel-fade"
+                                 data-bs-ride="carousel">
+                                <div class="carousel-indicators">
+                                    {% for num in range(property.images|length) %}
+                                    <button type="button" data-bs-target="#carouselExampleIndicators"
+                                            data-bs-slide-to="{{ num }}"
+                                            class="active" aria-current="true" aria-label="Slide 1"></button>
+                                    {% endfor %}
+                                </div>
+                                <div class="carousel-inner bg-dark">
+                                    {% for img in property.images %}
+                                    {% if loop.index == 1 %}
+                                    <div class="carousel-item active d-flex justify-content-center">
+                                        <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                             class="img-fluid" style="height:25rem;" alt="...">
+                                    </div>
+                                    {% else %}
+                                    <div class="carousel-item d-flex justify-content-center">
+                                        <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                             class="img-fluid" style="height:25rem;" alt="...">
+                                    </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                <button class="carousel-control-prev" type="button"
+                                        data-bs-target="#carouselExampleControls{{property.id}}"
+                                        data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Previous</span>
+                                </button>
+                                <button class="carousel-control-next" type="button"
+                                        data-bs-target="#carouselExampleControls{{property.id}}"
+                                        data-bs-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Next</span>
+                                </button>
+                            </div>
+                            {% else %}
+                            <div class="d-flex justify-content-center w-100">
+                                <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                                     class="img-fluid" style="height:25rem;"/>
+                            </div>
+                            {% endif %}
+                        </a>
+                        <div class=" card-body bg-light">
+                            <h4 class="card-title">
+                                <a href="{{ url_for('page.property_page', property_id=property.id) }}"
+                                   class="text-success">{{ property.property_title }}</a>
+                            </h4>
+                            <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
+                                property.location }}, {{ property.city }}</p>
+                            <div class="card-footer border-0 bg-light p-0 text-dark">
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item border-0 ps-0 py-0 bg-light"><i
+                                            class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
+                                    </li>
+                                    <li class="list-group-item border-0 py-0 bg-light"><i
+                                            class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
+                                    </li>
+                                    <li class="list-group-item border-0 py-0 bg-light"><i
+                                            class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
+                                    </li>
+                                    <li class="list-group-item border-0 py-0 bg-light"><i
+                                            class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area
+                                        }}m<sup>2</sup></li>
+                                </ul>
+                            </div>
+                            <div class="text-dark">
+                                <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
+                                <div><i class="fa-solid fa-money-check-dollar"></i> {{ property.payment_mode }}</div>
+                            </div>
+                            <div class="text-success fs-4">
+                                <i class="fa-solid fa-dollar-sign fa-sm"></i> {{ property.price }}
+                            </div>
+                            <div class="d-flex justify-content-start mt-2">
+                                <form method="POST"
+                                      action="{{ url_for('account.modify_post', property_id=property.id) }}">
+                                    <button type="submit" class="btn btn-outline-success btn-sm me-2">Modify</button>
+                                </form>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#staticBackdrop{{ property.id }}">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-
-            <div id="property-carousel" class="swiper">
-                <div class="swiper-wrapper">
-
-                    <div class="carousel-item-b swiper-slide">
-                        <div class="card-box-a card-shadow">
-                            <div class="img-box-a">
-                                <img src="{{ url_for('static', filename='assets/img/page_images/property-6.jpg') }}" alt=""
-                                     class="img-a img-fluid">
-                            </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                            <a href="property-single.html">206 Mount
-                                                <br/> Olive Road Two</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
-                                        </div>
-                                        <a href="#" class="link-a">Click here to view
-                                            <span class="bi bi-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                            <li>
-                                                <h4 class="card-info-title">Area</h4>
-                                                <span>340m
-                            <sup>2</sup>
-                          </span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Beds</h4>
-                                                <span>2</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Baths</h4>
-                                                <span>4</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Garages</h4>
-                                                <span>1</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- End carousel item -->
-
-                    <div class="carousel-item-b swiper-slide">
-                        <div class="card-box-a card-shadow">
-                            <div class="img-box-a">
-                                <img src="{{ url_for('static', filename='assets/img/page_images/property-3.jpg') }}" alt=""
-                                     class="img-a img-fluid">
-                            </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                            <a href="property-single.html">157 West
-                                                <br/> Central Park</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
-                                        </div>
-                                        <a href="property-single.html" class="link-a">Click here to view
-                                            <span class="bi bi-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                            <li>
-                                                <h4 class="card-info-title">Area</h4>
-                                                <span>340m
-                            <sup>2</sup>
-                          </span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Beds</h4>
-                                                <span>2</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Baths</h4>
-                                                <span>4</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Garages</h4>
-                                                <span>1</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- End carousel item -->
-
-                    <div class="carousel-item-b swiper-slide">
-                        <div class="card-box-a card-shadow">
-                            <div class="img-box-a">
-                                <img src="{{ url_for('static', filename='assets/img/page_images/property-7.jpg') }}" alt=""
-                                     class="img-a img-fluid">
-                            </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                            <a href="property-single.html">245 Azabu
-                                                <br/> Nishi Park let</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
-                                        </div>
-                                        <a href="property-single.html" class="link-a">Click here to view
-                                            <span class="bi bi-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                            <li>
-                                                <h4 class="card-info-title">Area</h4>
-                                                <span>340m
-                            <sup>2</sup>
-                          </span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Beds</h4>
-                                                <span>2</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Baths</h4>
-                                                <span>4</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Garages</h4>
-                                                <span>1</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- End carousel item -->
-
-                    <div class="carousel-item-b swiper-slide">
-                        <div class="card-box-a card-shadow">
-                            <div class="img-box-a">
-                                <img src="{{ url_for('static', filename='assets/img/page_images/property-10.jpg') }}" alt=""
-                                     class="img-a img-fluid">
-                            </div>
-                            <div class="card-overlay">
-                                <div class="card-overlay-a-content">
-                                    <div class="card-header-a">
-                                        <h2 class="card-title-a">
-                                            <a href="property-single.html">204 Montal
-                                                <br/> South Bela Two</a>
-                                        </h2>
-                                    </div>
-                                    <div class="card-body-a">
-                                        <div class="price-box d-flex">
-                                            <span class="price-a">rent | $ 12.000</span>
-                                        </div>
-                                        <a href="property-single.html" class="link-a">Click here to view
-                                            <span class="bi bi-chevron-right"></span>
-                                        </a>
-                                    </div>
-                                    <div class="card-footer-a">
-                                        <ul class="card-info d-flex justify-content-around">
-                                            <li>
-                                                <h4 class="card-info-title">Area</h4>
-                                                <span>340m
-                            <sup>2</sup>
-                          </span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Beds</h4>
-                                                <span>2</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Baths</h4>
-                                                <span>4</span>
-                                            </li>
-                                            <li>
-                                                <h4 class="card-info-title">Garages</h4>
-                                                <span>1</span>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div><!-- End carousel item -->
-                </div>
-            </div>
-            <div class="propery-carousel-pagination carousel-pagination"></div>
-
         </div>
     </section><!-- End Latest Properties Section -->
 
