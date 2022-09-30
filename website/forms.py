@@ -69,5 +69,5 @@ class PropertyPageForm(FlaskForm):
     name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired()])
     mobile = TelField("Mobile Number", validators=[DataRequired()])
-    submit = SubmitField("Inquire Now")
+    submit = SubmitField("Inquire")
 

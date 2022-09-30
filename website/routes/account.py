@@ -4,7 +4,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from website.forms import *
 from website.models.property import *
-from website.models.user import *
 from website import db
 import os
 

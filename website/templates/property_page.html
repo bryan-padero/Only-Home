@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-9">
             {% if selected_property.images %}
@@ -27,12 +27,14 @@
                     {% endif %}
                     {% endfor %}
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                <button class="carousel-control-prev" type="button"
+                        data-bs-target="#carouselExampleControls"
                         data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Previous</span>
                 </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                <button class="carousel-control-next" type="button"
+                        data-bs-target="#carouselExampleControls"
                         data-bs-slide="next">
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Next</span>
@@ -45,64 +47,51 @@
             </div>
             {% endif %}
             <div>
-                <p class="text-success mt-4 mb-0 fs-3"><i class="fa-solid fa-dollar-sign fa-sm"></i><span
-                        class="fw-bold fs-2">{{ selected_property.price }}</span> Yearly</p>
+                <p class="text-success mt-4 mb-0 fs-4"><i class="fa-solid fa-dollar-sign fa-sm"></i><span
+                        class="fw-bold fs-3">{{ selected_property.price }}</span> Yearly</p>
             </div>
             <div>
                 <ul class="list-group list-group-horizontal d-flex align-items-end">
-                    <li class="list-group-item border-0 ps-0 py-0 fs-4">
+                    <li class="list-group-item border-0 ps-0 py-0 fs-5">
                         <i class="fa-solid fa-bed"></i> {{ selected_property.num_of_bed }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-4">
+                    <li class="list-group-item border-0 py-0 fs-5">
                         <i class="fa-solid fa-bath"></i> {{ selected_property.num_of_bath }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-4">
+                    <li class="list-group-item border-0 py-0 fs-5">
                         <i class="fa-solid fa-car"></i> {{ selected_property.num_of_garage }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-4">
-                        <i class="fa-solid fa-ruler-combined"></i> {{ selected_property.area }}ft<sup>2</sup>
+                    <li class="list-group-item border-0 py-0 fs-5">
+                        <i class="fa-solid fa-ruler-combined"></i> {{ selected_property.area
+                        }}ft<sup>2</sup>
                     </li>
                 </ul>
             </div>
             <div>
                 <ul class="list-group list-group-horizontal d-flex align-items-end">
-                    <li class="list-group-item border-0 ps-0 py-0 fs-4">
+                    <li class="list-group-item border-0 ps-0 py-0 fs-5">
                         <i class="fa-solid fa-couch"></i> {{ selected_property.furnishing }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-4">
+                    <li class="list-group-item border-0 py-0 fs-5">
                         <i class="fa-solid fa-money-check-dollar"></i> {{ selected_property.payment_mode }}
                     </li>
                 </ul>
             </div>
             <div class="mb-4">
-                <p class="fs-3 mb-0 text-success"><i class="fa-solid fa-location-dot"></i> {{ selected_property.location
+                <p class="fs-4 mb-0 text-success"><i class="fa-solid fa-location-dot"></i> {{
+                    selected_property.location
                     }}, {{ selected_property.city }}</p>
             </div>
-        </div>
-        <div class="col-md-3">
-            <a class="btn btn-success" href="#"> Inquire Now</a>
-            <a class="btn btn-success" href="#"> Show Phone Number</a>
-            <form class="form-control">
-                <input class="form-control">
-                <input class="form-control">
-            </form>
-        </div>
-
-    </div>
-    <div class="row">
-        <div class="col-md-9">
-            <hr>
-            <h3 class="mb-4 text-success">Description</h3>
-            <h4>{{ selected_property.property_title }}</h4>
-            {{ selected_property.description }}
-        </div>
-        <div class="col-md-9">
-            <hr>
-            <div class="row">
+            <div>
+                <h4 class="mb-4 text-success">Description</h4>
+                <h5>{{ selected_property.property_title }}</h5>
+                <p class="fs-6">{{ selected_property.description }}</p>
+            </div>
+            <div>
                 <table class="table table-borderless">
                     <thead>
                     <tr>
-                        <td><h3 class="text-success">Property Details</h3></td>
+                        <td><h4 class="text-success">Property Details</h4></td>
                     </tr>
                     </thead>
                     <tbody>
@@ -116,13 +105,15 @@
                     </tr>
                     <tr>
                         <td>Listed By</td>
-                        <td>{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name }}</td>
+                        <td>{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name
+                            }}
+                        </td>
                     </tr>
                     <tr>
                         <td>Posted on</td>
                         <td>{{ selected_property.created_at.strftime('%d-%b-%Y') }}</td>
                     </tr>
-                     {% if selected_property.modified_at: %}
+                    {% if selected_property.modified_at: %}
                     <tr>
                         <td>Updated</td>
                         <td>{{ selected_property.modified_at.strftime('%d-%b-%Y %H:%M') }}</td>
@@ -131,10 +122,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div class="col-md-9">
-            <hr>
-            <h3 class="mb-4 text-success">Amenities</h3>
+            <h4 class="mb-4 text-success">Amenities</h4>
             <div class="row g-3 mb-4">
                 {% for amenity in selected_property_amenities %}
                 <div class="col-md-4 col-6">
@@ -142,64 +130,44 @@
                 </div>
                 {% endfor %}
             </div>
+            <h4 class="mb-4 text-success">Medias</h4>
+            <div>
+                {{ selected_property.video_url | safe }}
+            </div>
+            <div>
+                {{ selected_property.map_url | safe }}
+            </div>
+            <div>
+                <img src="{{ url_for('static', filename='assets/img/property_images/' + selected_property.floor_plan) }}"/>
+            </div>
         </div>
-        <div class="col-md-9">
-            <hr>
-            <h3 class="mb-4 text-success">Medias</h3>
-            <div class="row">
-                <!-- Tabs Navs -->
-                <ul class="nav nav-tabs nav-justified mb-4 pe-0" id="ex1" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link text-success active" id="tab-video" data-bs-toggle="tab"
-                           href="#tabs-video" role="tab" aria-selected="true">Video</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link text-success" id="tab-map" data-bs-toggle="tab"
-                           href="#tabs-map" role="tab" aria-selected="false">Map</a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link text-success" id="tab-floor-plan" data-bs-toggle="tab"
-                           href="#tabs-floor-plan" role="tab" aria-selected="false">Floor Plan</a>
-                    </li>
-                </ul>
-                <!-- Tabs Navs -->
-
-                <!-- Tabs content -->
-                <div class="tab-content container">
-                    <div class="tab-pane fade show active row" id="tabs-video" role="tabpanel"
-                         aria-labelledby="tab-video">
-                        {{ selected_property.video_url | safe }}
-                    </div>
-                    <div class="tab-pane fade row" id="tabs-map" role="tabpanel" aria-labelledby="tab-map">
-                        {{ selected_property.map_url | safe }}
-                    </div>
-                    {% if selected_property.floor_plan %}
-                    <div class="tab-pane fade row" id="tabs-floor-plan" role="tabpanel"
-                         aria-labelledby="tab-floor-plan">
-                        <img src="{{ url_for('static', filename='assets/img/page_images/'+ selected_property.floor_plan) }}"
-                             class="img-fluid img-thumbnail"/>
-                        {% else %}
-                        <div class="tab-pane fade row" id="tabs-floor-plan" role="tabpanel"
-                             aria-labelledby="tab-floor-plan">
-                            <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
-                                 class="img-fluid img-thumbnail"/>
-                            {% endif %}
-                        </div>
+        <div class="col-md-3 fs-6">
+            <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + selected_property.owner.profile_pic) }}"
+                 class="img-fluid rounded-circle" style="height:15rem;width:15rem;">
+            <p class="fs-6 mt-4">Listing by: <span class="fs-5">{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name }}</span>
+            </p>
+            <form method="POST"
+                  action="{{ url_for('page.property_page', property_id=selected_property.id) }}"
+                  enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                {{ form.message.label(class_="form-label") }} {{ form.message(class_="form-control",
+                style="height:10rem;") }}
+                {{ form.name.label(class_="form-label") }} {{ form.name(class_="form-control") }}
+                {{ form.email.label(class_="form-label") }} {{ form.email(class_="form-control") }}
+                {{ form.mobile.label(class_="form-label") }} {{ form.mobile(class_="form-control") }}
+                {{ form.submit(class_="btn btn-success w-100 mt-2") }}
+                <button class="btn btn-outline-success form-control mt-2" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#view-mobile" aria-expanded="false" aria-controls="view-mobile">
+                    View Agent Mobile
+                </button>
+                <div class="collapse" id="view-mobile">
+                    <div class="card card-body">
+                        <p class="fs-4 text-center mb-0">{{ selected_property.owner.mobile }}</p>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-9">
-                <hr>
-                <h3 class="mb-4 text-success">Inquire Now</h3>
-                <form method="POST" action="{{ url_for('page.property_page') }}">
-                    {{ form.hidden_tag() }}
-                    {{ form.message.label(class_="form-label") }} {{ form.message(class_="form-control") }}
-                    {{ form.name.label(class_="form-label") }} {{ form.name(class_="form-control") }}
-                    {{ form.email.label(class_="form-label") }} {{ form.email(class_="form-control") }}
-                    {{ form.mobile.label(class_="form-label") }} {{ form.mobile(class_="form-control") }}
-                    {{ form.submit(class_="btn w-100 btn-success mt-3") }}
-                </form>
-            </div>
+            </form>
         </div>
     </div>
-    {% endblock %}
+</div>
+{% endblock %}
