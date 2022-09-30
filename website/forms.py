@@ -65,9 +65,9 @@ class PropertyForm(FlaskForm):
 
 
 class PropertyPageForm(FlaskForm):
-    message = TextAreaField("Message", validators=[DataRequired()])
-    name = StringField("Name", validators=[DataRequired()])
-    email = StringField("Email", validators=[DataRequired()])
-    mobile = TelField("Mobile Number", validators=[DataRequired()])
+    message = TextAreaField("Message", validators=[DataRequired()], render_kw={"placeholder": "Message"})
+    name = StringField("Name", validators=[DataRequired()] , render_kw={"placeholder": "Name"})
+    email = StringField("Email", validators=[DataRequired()] , render_kw={"placeholder": "Email"})
+    mobile = TelField("Mobile", validators=[DataRequired()], render_kw={"placeholder": "Mobile"})
     submit = SubmitField("Inquire")
 

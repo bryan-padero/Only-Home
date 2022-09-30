@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-9">
+<div class="container">
+    <div class="row g-2">
+        <div class="col-md-8 border border-1 rounded-2 p-3 me-3">
             {% if selected_property.images %}
             <div id="carouselExampleControls" class="carousel slide carousel-fade" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -47,21 +47,21 @@
             </div>
             {% endif %}
             <div>
-                <p class="text-success mt-4 mb-0 fs-4"><i class="fa-solid fa-dollar-sign fa-sm"></i><span
+                <p class="text-success mt-4 mb-0 fs-5"><i class="fa-solid fa-dollar-sign fa-sm"></i><span
                         class="fw-bold fs-3">{{ selected_property.price }}</span> Yearly</p>
             </div>
             <div>
                 <ul class="list-group list-group-horizontal d-flex align-items-end">
-                    <li class="list-group-item border-0 ps-0 py-0 fs-5">
+                    <li class="list-group-item border-0 ps-0 py-0 fs-6">
                         <i class="fa-solid fa-bed"></i> {{ selected_property.num_of_bed }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-5">
+                    <li class="list-group-item border-0 py-0 fs-6">
                         <i class="fa-solid fa-bath"></i> {{ selected_property.num_of_bath }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-5">
+                    <li class="list-group-item border-0 py-0 fs-6">
                         <i class="fa-solid fa-car"></i> {{ selected_property.num_of_garage }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-5">
+                    <li class="list-group-item border-0 py-0 fs-6">
                         <i class="fa-solid fa-ruler-combined"></i> {{ selected_property.area
                         }}ft<sup>2</sup>
                     </li>
@@ -69,101 +69,151 @@
             </div>
             <div>
                 <ul class="list-group list-group-horizontal d-flex align-items-end">
-                    <li class="list-group-item border-0 ps-0 py-0 fs-5">
+                    <li class="list-group-item border-0 ps-0 py-0 fs-6">
                         <i class="fa-solid fa-couch"></i> {{ selected_property.furnishing }}
                     </li>
-                    <li class="list-group-item border-0 py-0 fs-5">
+                    <li class="list-group-item border-0 py-0 fs-6">
                         <i class="fa-solid fa-money-check-dollar"></i> {{ selected_property.payment_mode }}
                     </li>
                 </ul>
             </div>
             <div class="mb-4">
-                <p class="fs-4 mb-0 text-success"><i class="fa-solid fa-location-dot"></i> {{
-                    selected_property.location
-                    }}, {{ selected_property.city }}</p>
+                <p class="fs-5 mb-0 text-success"><i class="fa-solid fa-location-dot"></i> {{
+                    selected_property.location }}, {{ selected_property.city }}</p>
             </div>
+            <hr>
             <div>
                 <h4 class="mb-4 text-success">Description</h4>
-                <h5>{{ selected_property.property_title }}</h5>
+                <h5 class="text-success">{{ selected_property.property_title }}</h5>
                 <p class="fs-6">{{ selected_property.description }}</p>
             </div>
+            <hr>
             <div>
                 <table class="table table-borderless">
                     <thead>
                     <tr>
-                        <td><h4 class="text-success">Property Details</h4></td>
+                        <td class="ps-0"><h4 class="text-success">Property Details</h4></td>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>Property Type</td>
-                        <td>{{ selected_property.property_type }}</td>
+                        <td class="ps-0 text-success">Property Type</td>
+                        <td class="ps-0">{{ selected_property.property_type }}</td>
                     </tr>
                     <tr>
-                        <td>Rent is Paid</td>
-                        <td>{{ selected_property.payment_mode }}</td>
+                        <td class="ps-0 text-success">Rent is Paid</td>
+                        <td class="ps-0">{{ selected_property.payment_mode }}</td>
                     </tr>
                     <tr>
-                        <td>Listed By</td>
-                        <td>{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name
+                        <td class="ps-0 text-success">Listed By</td>
+                        <td class="ps-0">{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name
                             }}
                         </td>
                     </tr>
                     <tr>
-                        <td>Posted on</td>
-                        <td>{{ selected_property.created_at.strftime('%d-%b-%Y') }}</td>
+                        <td class="ps-0 text-success">Posted on</td>
+                        <td class="ps-0">{{ selected_property.created_at.strftime('%d-%b-%Y') }}</td>
                     </tr>
                     {% if selected_property.modified_at: %}
                     <tr>
-                        <td>Updated</td>
-                        <td>{{ selected_property.modified_at.strftime('%d-%b-%Y %H:%M') }}</td>
+                        <td class="ps-0 text-success">Updated</td>
+                        <td class="ps-0">{{ selected_property.modified_at.strftime('%d-%b-%Y %H:%M') }}</td>
                     </tr>
                     {% endif %}
                     </tbody>
                 </table>
             </div>
-            <h4 class="mb-4 text-success">Amenities</h4>
+            <hr>
             <div class="row g-3 mb-4">
+                <h4 class="mb-4 text-success">Amenities</h4>
                 {% for amenity in selected_property_amenities %}
                 <div class="col-md-4 col-6">
-                    <i class="fa-solid fa-circle-check fa-lg"></i> {{ amenity.amenity_name }}
+                    <i class="fa-solid fa-circle-check fa-lg text-success"></i> {{ amenity.amenity_name }}
                 </div>
                 {% endfor %}
             </div>
+            <hr>
             <h4 class="mb-4 text-success">Medias</h4>
-            <div>
-                {{ selected_property.video_url | safe }}
-            </div>
-            <div>
-                {{ selected_property.map_url | safe }}
-            </div>
-            <div>
-                <img src="{{ url_for('static', filename='assets/img/property_images/' + selected_property.floor_plan) }}"/>
+            <nav>
+                <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <button class="nav-link active text-success" id="nav-video-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-video"
+                            type="button" role="tab" aria-controls="nav-video" aria-selected="true">Video
+                    </button>
+                    <button class="nav-link text-success" id="nav-map-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-map"
+                            type="button" role="tab" aria-controls="nav-map" aria-selected="false">Map
+                    </button>
+                    <button class="nav-link text-success" id="nav-floor-plan-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-floor-plan"
+                            type="button" role="tab" aria-controls="nav-floor-plan" aria-selected="false">Floor Plan
+                    </button>
+                </div>
+            </nav>
+            <div class="tab-content d-flex justify-content-center container" id="nav-tabContent">
+                <div class="tab-pane fade show active mt-4" id="nav-video" role="tabpanel"
+                     aria-labelledby="nav-home-tab"
+                     tabindex="0">
+                    {{ selected_property.video_url | safe }}
+                </div>
+                <div class="tab-pane fade" id="nav-map mt-4" role="tabpanel" aria-labelledby="nav-profile-tab"
+                     tabindex="0">
+                    {{ selected_property.map_url | safe }}
+                </div>
+                <div class="tab-pane fade mt-4" id="nav-floor-plan" role="tabpanel" aria-labelledby="nav-contact-tab"
+                     tabindex="0">
+                    {% if selected_property.floor_plan: %}
+                    <img class="img-fluid" style="height:35rem"
+                         src="{{ url_for('static', filename='/assets/img/property_images/' + selected_property.floor_plan) }}"/>
+                    {% else: %}
+                    <img class="img-fluid flex-fill"
+                         src="{{ url_for('static', filename='/assets/img/page_images/default-image.jpg') }}"/>
+                    {% endif %}
+                </div>
+
             </div>
         </div>
-        <div class="col-md-3 fs-6">
-            <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + selected_property.owner.profile_pic) }}"
-                 class="img-fluid rounded-circle" style="height:15rem;width:15rem;">
-            <p class="fs-6 mt-4">Listing by: <span class="fs-5">{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name }}</span>
-            </p>
+        <div class="col-md-3 border border-1 rounded-2 p-3" style="height:37rem;">
+            <div class="row">
+                <div class="d-flex justify-content-center mb-2 col-6">
+                    {% if selected_property.owner.profile_pic: %}
+                    <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + selected_property.owner.profile_pic) }}"
+                         class="img-fluid rounded-circle" style="height:6rem;width:6rem;">
+                    {% else: %}
+                    <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                         class="img-fluid rounded-circle" style="height:6rem;width:6rem;">
+                    {% endif %}
+                </div>
+                <div class="col-6">
+                    <p class="text-success mb-0">Listed by:</p>
+                    <p class="mb-0">{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name }}</p>
+                    <p class="mb-0" style="font-size:0.8rem;"><i class="fa-solid fa-comment-dots"></i> 0 reviews</p>
+                    <a href="#" class=" text-success mb-0" style="font-size:0.8rem;">Write a Review</a>
+                </div>
+            </div>
             <form method="POST"
                   action="{{ url_for('page.property_page', property_id=selected_property.id) }}"
                   enctype="multipart/form-data">
                 {{ form.hidden_tag() }}
-                {{ form.message.label(class_="form-label") }} {{ form.message(class_="form-control",
+                {{ form.message(class_="form-control mt-3",
                 style="height:10rem;") }}
-                {{ form.name.label(class_="form-label") }} {{ form.name(class_="form-control") }}
-                {{ form.email.label(class_="form-label") }} {{ form.email(class_="form-control") }}
-                {{ form.mobile.label(class_="form-label") }} {{ form.mobile(class_="form-control") }}
-                {{ form.submit(class_="btn btn-success w-100 mt-2") }}
-                <button class="btn btn-outline-success form-control mt-2" type="button"
+                {{ form.name(class_="form-control mt-3") }}
+                {{ form.email(class_="form-control mt-3") }}
+                <div class="input-group input-group-md mt-3">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">+971</span>
+                    {{ form.mobile(class_="form-control ") }}
+                </div>
+                <button type="submit" class="btn btn-success form-control mt-3">
+                    <i class="fa-regular fa-pen-to-square"></i> Inquire
+                </button>
+                <button class="btn btn-outline-success form-control mt-3" type="button"
                         data-bs-toggle="collapse"
                         data-bs-target="#view-mobile" aria-expanded="false" aria-controls="view-mobile">
-                    View Agent Mobile
+                    <i class="fa-solid fa-mobile-screen"></i> View Agent Mobile
                 </button>
                 <div class="collapse" id="view-mobile">
                     <div class="card card-body">
-                        <p class="fs-4 text-center mb-0">{{ selected_property.owner.mobile }}</p>
+                        <p class="fs-4 text-center mb-0 ">{{ selected_property.owner.mobile }}</p>
                     </div>
                 </div>
             </form>

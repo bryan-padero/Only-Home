@@ -21,7 +21,16 @@ AMENITY_LIST = ["Central A/C", "Central Heating", "Chiller Free", "Balcony", "Pr
 def index():
     login_form = LoginForm()
     register_form = RegisterForm()
-    return render_template("index.html", register_form=register_form, login_form=login_form, title_page="Home")
+    all_properties = Property.query.all()
+    all_property_images = ImageSet.query.all()
+    context = {
+        "register_form": register_form,
+        "login_form": login_form,
+        "title_page": "Home",
+        "all_properties": all_properties,
+        "all_property_images": all_property_images,
+    }
+    return render_template("index.html", **context)
 
 
 def save_image(image_file, img_dir):
