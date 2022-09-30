@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
+from flask_migrate import Migrate
 from flask_login import LoginManager
 from os import path
 
@@ -15,6 +16,7 @@ def create_app():
     # DB Config
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    migrate = Migrate(app, db)
     db.init_app(app)
 
     # Flask Bootstrap
