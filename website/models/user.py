@@ -17,7 +17,8 @@ class User(UserMixin, db.Model):
     mobile = db.Column(db.String(100))
     property = db.relationship("Property", backref="owner")
     inquiry = db.relationship("Inquiry", backref="inquirer")
-    review = db.relationship("Review", backref="reviewer")
+    review = db.relationship("Review", foreign_keys="Review.reviewer_id", backref="reviewer")
+    my_review = db.relationship("Review", foreign_keys="Review.reviewee_id", backref="reviewee")
     created_at = db.Column(db.DateTime(timezone=True), nullable=False, default=datetime.now)
     modified_at = db.Column(db.DateTime(timezone=True))
 
