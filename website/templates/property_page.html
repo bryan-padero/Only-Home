@@ -188,7 +188,7 @@
                     <p class="text-success mb-0">Listed by:</p>
                     <p class="mb-0">{{ selected_property.owner.first_name }} {{ selected_property.owner.last_name }}</p>
                     <p class="mb-0" style="font-size:0.8rem;"><i class="fa-solid fa-comment-dots"></i> 0 reviews</p>
-                    <a href="#" class=" text-success mb-0" style="font-size:0.8rem;">Write a Review</a>
+                    <a href="{{ url_for('page.review', owner_id=selected_property.owner.id) }}" class=" text-success mb-0" style="font-size:0.8rem;">Write a Review</a>
                 </div>
             </div>
             <form method="POST"

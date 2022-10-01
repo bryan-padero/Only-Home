@@ -71,3 +71,10 @@ class PropertyPageForm(FlaskForm):
     mobile = TelField("Mobile", validators=[DataRequired()], render_kw={"placeholder": "Mobile"})
     submit = SubmitField("Inquire")
 
+
+class ReviewForm(FlaskForm):
+    comment = TextAreaField("Comment", validators=[DataRequired()], render_kw={"placeholder": "Comment"})
+    name = StringField("Name", validators=[DataRequired()], render_kw={"placeholder": "Name"})
+    email = StringField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
+    mobile = TelField("Mobile", validators=[DataRequired()], render_kw={"placeholder": "Mobile"})
+    submit = SubmitField("Submit")

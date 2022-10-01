@@ -480,6 +480,41 @@ height: -moz-calc(100vh - 250px);
   margin-right: 25px;
 }
 
+/*-- Review Form --*/
+
+.review-form .input-rating .stars {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.review-form .input-rating .stars input[type="radio"] {
+  display: none;
+}
+
+.review-form .input-rating .stars>label {
+  float: right;
+  cursor: pointer;
+  padding: 0px 3px;
+  margin: 0px;
+}
+
+.review-form .input-rating .stars>label:before {
+  content: "\f006";
+  font-family: FontAwesome;
+  color: #006600;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+}
+
+.review-form .input-rating .stars>label:hover:before, .review-form .input-rating .stars>label:hover~label:before {
+  color: #ffcc00;
+}
+
+.review-form .input-rating .stars>input:checked label:before, .review-form .input-rating .stars>input:checked~label:before {
+  content: "\f005";
+  color: #ffcc00;
+}
+
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
