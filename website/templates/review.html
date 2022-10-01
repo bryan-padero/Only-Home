@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="container">
+    <h2 class="my-5 ps-0">Review</h2>
+    <div class="row d-flex justify-content-center border border-1 rounded-2 mx-1 py-5">
+        <div class="col-md-3">
+            <div class="col-md-12">
+                {% if not owner.profile_pic %}
+                <img class="img-fluid mb-4 img-thumbnail" style="width:17rem;height:20rem;"
+                     src="{{ url_for('static', filename='assets/img/profile_pictures/blank-profile-picture.png') }}"/>
+                {% else %}
+                <img class="img-fluid mb-4" style="width:17rem;height:20rem;"
+                     src="{{ url_for('static', filename='assets/img/profile_pictures/' + owner.profile_pic ) }}"/>
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-3">
+            <table class="table table-borderless">
+                <thead>
+                <tr>
+                    <td class="ps-0"><h4 class="text-success">Profile</h4></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="ps-0 text-success">Name</td>
+                    <td class="ps-0">{{ owner.first_name }} {{ owner.last_name }}</td>
+                </tr>
+                <tr>
+                    <td class="ps-0 text-success">Email</td>
+                    <td class="ps-0">{{ owner.email }}</td>
+                </tr>
+                <tr>
+                    <td class="ps-0 text-success">Mobile</td>
+                    <td class="ps-0"> {{ owner.mobile }}</td>
+                </tr>
+                <tr>
+                    <td class="ps-0 text-success">Properties</td>
+                    <td class="ps-0">{{ owner.property | length }}</td>
+                </tr>
+                {% if owner.review: %}
+                <tr>
+                    <td class="ps-0 text-success">Ratings</td>
+                    <td class="ps-0">{{ rating }}</td>
+                </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <form method="POST" action="{{ url_for('page.review', owner_id=owner.id) }}" enctype="multipart/form-data" class="review-form">
+                {{ form.hidden_tag() }}
+                {{ form.name(class_="form-control") }}
+                {{ form.email(class_="form-control mt-3") }}
+                {{ form.mobile(class_="form-control mt-3") }}
+                {{ form.comment(class_="form-control mt-3", style="height:15rem;") }}
+                <div class="input-rating mt-3">
+                    <span class="fs-6">Your Rating: </span>
+                    <div class="stars fs-5">
+                        <input id="star5" name="rating" value="5" type="radio" required><label
+                            for="star5"></label>
+                        <input id="star4" name="rating" value="4" type="radio" required><label
+                            for="star4"></label>
+                        <input id="star3" name="rating" value="3" type="radio" required><label
+                            for="star3"></label>
+                        <input id="star2" name="rating" value="2" type="radio" required><label
+                            for="star2"></label>
+                        <input id="star1" name="rating" value="1" type="radio" required><label
+                            for="star1"></label>
+                    </div>
+                </div>
+                {{ form.submit(class_="form-control btn btn-success mt-3") }}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
