@@ -3,14 +3,14 @@
 {% block content %}
 {% include "account_page_template.html" %}
 <div class="col-md-9">
-    <form class="row g-3" method="POST" action="{{ url_for('account.post_property') }}" enctype="multipart/form-data">
+    <form class="row g-3 border border-1 rounded-2 p-3 m-0" method="POST"
+          action="{{ url_for('account.post_property') }}" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="col-md-12">
             {{ form.title.label(class="form-label") }} {{ form.title(class_="form-control") }}
         </div>
         <div class="col-md-12">
-            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control", style="height:
-            15rem;") }}
+            {{ form.description.label(class="form-label") }} {{ form.description(class_="form-control") }}
         </div>
         <div class="col-md-4">
             {{ form.floor_plan.label(class_="form-label") }} {{ form.floor_plan(class_="form-control") }}
@@ -69,10 +69,10 @@
                 <div class="row g-2 form-group">
                     {% for item in amenity_list %}
                     <div class="col-6 col-md-4 mx-0 position-relative">
-                                <input class="form-check-input" name="amenity" type="checkbox"
-                                       value="{{ item }}" id="flexCheckDefault{{ item }}">
-                                <label class="form-check-label stretched-link" for="flexCheckDefault{{ item }}">
-                                    {{ item }}</label>
+                        <input class="form-check-input" name="amenity" type="checkbox"
+                               value="{{ item }}" id="flexCheckDefault{{ item }}">
+                        <label class="form-check-label stretched-link" for="flexCheckDefault{{ item }}">
+                            {{ item }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -81,10 +81,11 @@
         <div class="col-md-6 col-6">
             <a href="{{ url_for('account.my_posts') }}" class="btn btn-dark w-100">Cancel</a>
         </div>
-        <div class="col-md-6 col-6">
+        <div class="col-md-6 col-6 pb-2">
             {{ form.submit(class_="form-control btn btn-success" ) }}
         </div>
-
     </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='description') }}
 </div>
 {% endblock content %}

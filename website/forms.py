@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_ckeditor import CKEditorField
 from wtforms import StringField, SubmitField, PasswordField, DateField, TelField, FloatField, IntegerField, \
     SelectField, TextAreaField, MultipleFileField, FileField, SelectMultipleField
 from flask_wtf.file import FileAllowed
@@ -8,7 +9,7 @@ from wtforms.validators import DataRequired, EqualTo, Length, Email, URL, Option
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=20)])
-    submit = SubmitField("Sign in")
+    submit = SubmitField("Login")
 
 
 class RegisterForm(FlaskForm):
@@ -17,7 +18,7 @@ class RegisterForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired(), Length(min=8, max=20)])
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired()])
-    submit = SubmitField("Sign up")
+    submit = SubmitField("Register")
 
 
 class ProfileForm(FlaskForm):
@@ -46,7 +47,7 @@ class PropertyForm(FlaskForm):
     furnishings = [("", "Please select"), ("Unfurnished", "Unfurnished"), ("Furnished", "Furnished"),
                    ("Semi-Furnished", "Semi-Furnished"), ]
     title = StringField("Title", validators=[DataRequired()])
-    description = TextAreaField("Description", validators=[DataRequired()])
+    description = CKEditorField("Description", validators=[DataRequired()])
     floor_plan = FileField("Floor Plan", validators=[FileAllowed(['jpg', 'png'])])
     type = SelectField("Property Type", choices=types, validators=[DataRequired()])
     city = SelectField("City", choices=cities, validators=[DataRequired()])

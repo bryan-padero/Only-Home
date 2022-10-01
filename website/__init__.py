@@ -3,9 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_ckeditor import CKEditor
 from os import path
 
 db = SQLAlchemy()
+ckeditor = CKEditor()
 DB_NAME = "app_database.db"
 
 
@@ -21,6 +23,9 @@ def create_app():
 
     # Flask Bootstrap
     Bootstrap(app)
+
+    #Flask CKEditor
+    ckeditor.init_app(app)
 
     from website.routes.account import account
     from website.routes.auth import auth

@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content%}
 <div class="container">
-    <h2 class="my-5 ps-0">Review</h2>
-    <div class="row d-flex justify-content-center border border-1 rounded-2 mx-1 py-5">
+    <h2 class="my-3 ps-0">Review</h2>
+    <div class="row d-flex justify-content-center border border-1 rounded-2 m-0 py-5">
         <div class="col-md-3">
             <div class="col-md-12">
                 {% if not owner.profile_pic %}
@@ -14,7 +14,7 @@
                 {% endif %}
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <table class="table table-borderless">
                 <thead>
                 <tr>
@@ -38,16 +38,16 @@
                     <td class="ps-0 text-success">Properties</td>
                     <td class="ps-0">{{ owner.property | length }}</td>
                 </tr>
-                {% if owner.review: %}
+                {% if avg_rating: %}
                 <tr>
-                    <td class="ps-0 text-success">Ratings</td>
-                    <td class="ps-0">{{ owner.review.rating }}</td>
+                    <td class="ps-0 text-success">Average Rating</td>
+                    <td class="ps-0">{{ avg_rating }}</td>
                 </tr>
                 {% endif %}
                 </tbody>
             </table>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
             <form method="POST" action="{{ url_for('page.review', owner_id=owner.id) }}" enctype="multipart/form-data" class="review-form">
                 {{ form.hidden_tag() }}
                 {{ form.name(class_="form-control") }}
@@ -74,5 +74,4 @@
         </div>
     </div>
 </div>
-
 {% endblock %}

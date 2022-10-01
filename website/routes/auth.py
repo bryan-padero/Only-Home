@@ -25,11 +25,11 @@ def login():
             remember_me = True if request.form.get("remember") else False
             login_user(user, remember=remember_me)
             return redirect(url_for("account.update_profile"))
-    return render_template("index.html", login_form=login_form, register_form=register_form)
+    return render_template("login_page.html", login_form=login_form, register_form=register_form)
 
 
-@auth.route("/signup", methods=["POST", "GET"])
-def signup():
+@auth.route("/register", methods=["POST", "GET"])
+def register():
     register_form = RegisterForm()
     login_form = LoginForm()
     if register_form.validate_on_submit():
@@ -52,7 +52,7 @@ def signup():
         else:
             flash("Password does not match, please try again", "danger")
             return redirect(request.url)
-    return render_template("index.html", login_form=login_form, register_form=register_form)
+    return render_template("login_page.html", login_form=login_form, register_form=register_form)
 
 
 @auth.route("/logout")

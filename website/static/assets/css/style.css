@@ -158,7 +158,7 @@ a:hover {
   z-index: 2;
 }
 
-.tab-content{
+/*.tab-content{ */
 /* this is where you would scroll only the content */
 overflow:auto;
 height: calc(100vh - 250px); /* Replace 42px with the needed height. 100vh means the whole height of the browser's viewport */

@@ -3,7 +3,8 @@
 {% block content %}
 {% include "account_page_template.html" %}
 <div class="col-md-9">
-    <form class="row g-3" method="POST" action="{{ url_for('account.modify_post', property_id=property_to_update.id) }}"
+    <form class="row g-3 border border-1 rounded-2 m-0 p-3" method="POST"
+          action="{{ url_for('account.modify_post', property_id=property_to_update.id) }}"
           enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="col-md-12">
@@ -87,7 +88,8 @@
                         <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
                              class="img-fluid" style="width:30rem;height:23rem;" alt="...">
                         <div class="carousel-caption d-flex pb-0 justify-content-center">
-                            <a href="{{ url_for('account.delete_post_item', img_id=img.id) }} " class="btn btn-dark btn-sm">Delete
+                            <a href="{{ url_for('account.delete_post_item', img_id=img.id) }} "
+                               class="btn btn-dark btn-sm">Delete
                                 <i class="fa-sharp fa-solid fa-trash fa-xl"></i></a>
                         </div>
                     </div>
@@ -97,7 +99,8 @@
                         <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
                              class="img-fluid" style="width:30rem;height:23rem;" alt="...">
                         <div class="carousel-caption d-flex pb-0 justify-content-center">
-                            <a href="{{ url_for('account.delete_post_item', img_id=img.id) }}" class="btn btn-dark btn-sm">Delete
+                            <a href="{{ url_for('account.delete_post_item', img_id=img.id) }}"
+                               class="btn btn-dark btn-sm">Delete
                                 <i class="fa-sharp fa-solid fa-trash fa-xl"></i></a>
                         </div>
                     </div>
@@ -145,14 +148,15 @@
                 <div class="row g-2 form-group">
                     {% for item in amenity_list %}
                     <div class="col-6 col-md-4 mx-0 position-relative">
-                            {% if item in property_amenities %}
-                                <input class="form-check-input" name="amenity" type="checkbox"
-                                       value="{{ item }}" id="flexCheckDefault{{ item }}" checked>
-                            {% else %}
-                                <input class="form-check-input" name="amenity" type="checkbox"
-                                       value="{{ item }}" id="flexCheckDefault{{ item }}">
-                            {% endif %}
-                                <label class="form-check-label stretched-link ps-1" for="flexCheckDefault{{ item }}">{{ item }}</label>
+                        {% if item in property_amenities %}
+                        <input class="form-check-input" name="amenity" type="checkbox"
+                               value="{{ item }}" id="flexCheckDefault{{ item }}" checked>
+                        {% else %}
+                        <input class="form-check-input" name="amenity" type="checkbox"
+                               value="{{ item }}" id="flexCheckDefault{{ item }}">
+                        {% endif %}
+                        <label class="form-check-label stretched-link ps-1" for="flexCheckDefault{{ item }}">{{ item
+                            }}</label>
                     </div>
                     {% endfor %}
                 </div>
@@ -161,9 +165,11 @@
         <div class="col-md-6 col-6">
             <a href="{{ url_for('account.my_posts') }}" class="btn btn-dark w-100">Cancel</a>
         </div>
-        <div class="col-md-6 col-6">
+        <div class="col-md-6 col-6 pb-2">
             {{ form.submit(class_="form-control btn btn-success" ) }}
         </div>
     </form>
+    {{ ckeditor.load() }}
+    {{ ckeditor.config(name='description') }}
 </div>
 {% endblock content %}
