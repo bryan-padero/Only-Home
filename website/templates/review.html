@@ -48,7 +48,8 @@
             </table>
         </div>
         <div class="col-md-4">
-            <form method="POST" action="{{ url_for('page.review', owner_id=owner.id) }}" enctype="multipart/form-data" class="review-form">
+            <form method="POST" action="{{ url_for('page.review', owner_id=owner.id) }}" enctype="multipart/form-data"
+                  class="review-form">
                 {{ form.hidden_tag() }}
                 {{ form.name(class_="form-control") }}
                 {{ form.email(class_="form-control mt-3") }}
@@ -73,5 +74,66 @@
             </form>
         </div>
     </div>
+    {% if paginate_reviews.items %}
+    <h2 class="my-3">Customer Reviews</h2>
+    <div class="row m-0 border border-1 rounded-2 px-4 pt-2">
+        <table class="table table-borderless">
+            <tbody>
+            {% for review in paginate_reviews.items %}
+            <tr>
+                <td class="pb-0 pt-3">
+                    <div class="row pb-0">
+                        <div class="d-flex align-items-center col-6 ps-0">
+                            {% if review.reviewer.profile_pic: %}
+                            <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + review.reviewer.profile_pic) }}"
+                                 class="img-fluid rounded-circle" style="height:3rem;width:3rem;">
+                            <p class="fs-5 fw-semibold text-success mb-0 ps-2"> {{ review.reviewer.first_name }} </p>
+                            {% else: %}
+                            <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                                 class="img-fluid rounded-circle" style="height:6rem;width:6rem;">
+                            <p class="fs-5 fw-semibold text-success mb-0 ps-2">{{ review.reviewer.first_name }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-6 d-flex justify-content-end pe-0">
+                            <p class="text-success">{{ review.created_at.strftime('%d %b %Y %H:%M') }}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="ps-0 px-3 text-success">
+                    Rating
+                    {% for stars in range(5) %}
+                    {% if review.rating <= stars %}
+                    <i class="fa-regular fa-star" style="color:#ffcc00;"></i>
+                    {%else%}
+                    <i class="fa fa-star" style="color:#ffcc00;"></i>
+                    {%endif%}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="ps-0 pb-3">
+                    {{ review.comment }}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination d-flex justify-content-center">
+            {% for page in paginate_reviews.iter_pages() %}
+            {% if page %}
+            {% if page == page_num %}
+            <li class="active pagae-item">{{ page }}</li>
+            {% else %}
+            <li class="page-item"><a class="page-link text-success"
+                                     href="{{ url_for('page.review', page_num=page, owner_id=owner.id) }}#reviews-h3">{{ page }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

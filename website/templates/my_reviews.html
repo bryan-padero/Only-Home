@@ -1,38 +1,67 @@
 {% extends "base.html" %}
 {% block content%}
-<div class="container">
-    <h2 class="my-3 ps-0">Review</h2>
-    <div class="row d-flex justify-content-center border border-1 rounded-2 m-0 py-5">
-        <div class="col-md-6">
-            <table class="table table-borderless">
-                <thead>
-                <tr>
-                    <td class="ps-0"><h4 class="text-success">Reviews</h4></td>
-                </tr>
-                </thead>
-                <tbody>
-                {% for review in all_reviews %}
-                <tr>
-                    <td class="ps-0">
-                        <div class="d-flex align-items-center mb-2 col-6">
+{% include "account_page_template.html" %}
+<div class="col-md-7 ">
+    {% if paginate_reviews.items %}
+    <div class="row m-0 border border-1 rounded-2 px-4 pt-2">
+        <table class="table table-borderless">
+            <tbody>
+            {% for review in paginate_reviews.items %}
+            <tr>
+                <td class="pb-0 pt-3">
+                    <div class="row pb-0">
+                        <div class="d-flex align-items-center col-6 ps-0">
                             {% if review.reviewer.profile_pic: %}
                             <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + review.reviewer.profile_pic) }}"
-                                 class="img-fluid rounded-circle" style="height:3rem;width:3rem;"> <p class="mb-0 ps-2"> {{ review.reviewer.first_name }}</p>
+                                 class="img-fluid rounded-circle" style="height:3rem;width:3rem;">
+                            <p class="fs-5 fw-semibold text-success mb-0 ps-2"> {{ review.reviewer.first_name }} </p>
                             {% else: %}
                             <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
-                                 class="img-fluid rounded-circle" style="height:6rem;width:6rem;"> {{ review.reviewer.first_name }}
+                                 class="img-fluid rounded-circle" style="height:6rem;width:6rem;">
+                            <p class="fs-5 fw-semibold text-success mb-0 ps-2">{{ review.reviewer.first_name }}</p>
                             {% endif %}
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="ps-0 pt-0 text-success">{% for start in range(review.rating) %}{%if review.rating < 5%}<i class="fa fa-star"></i>{%endif%}{% endfor %}{{ review.rating }} Reviewed on {{ review.created_at.strftime('%d %b %Y') }}</td>
-                    <td class="ps-0">{{ review.comment }}</td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+                        <div class="col-6 d-flex justify-content-end pe-0">
+                            <p class="text-success">{{ review.created_at.strftime('%d %b %Y %H:%M') }}</p>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="ps-0 px-3 text-success">
+                    Rating
+                    {% for stars in range(5) %}
+                    {% if review.rating <= stars %}
+                    <i class="fa-regular fa-star" style="color:#ffcc00;"></i>
+                    {%else%}
+                    <i class="fa fa-star" style="color:#ffcc00;"></i>
+                    {%endif%}
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr class="border-bottom">
+                <td class="ps-0 pb-3">
+                    {{ review.comment }}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination d-flex justify-content-center">
+            {% for page in paginate_reviews.iter_pages() %}
+            {% if page %}
+            {% if page == page_num %}
+            <li class="active pagae-item">{{ page }}</li>
+            {% else %}
+            <li class="page-item"><a class="page-link text-success"
+                                     href="{{ url_for('account.my_reviews', page_num=page) }}#reviews-h3">{{ page }}</a>
+            </li>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </ul>
     </div>
+    {% endif %}
 </div>
+
 {% endblock %}

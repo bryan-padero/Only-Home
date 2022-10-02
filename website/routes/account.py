@@ -296,11 +296,12 @@ def delete_post_item():
 @account.route("/my_reviews", methods=["POST", "GET"])
 @login_required
 def my_reviews():
-    all_reviews = Review.query.filter_by(reviewee_id=current_user.id).all()
-    print(all_reviews)
+    page_num = request.args.get("page_num")
+    page_num = 1 if page_num is None else int(page_num)
+    paginate_reviews = Review.query.filter(Review.reviewee_id == current_user.id).paginate(page=page_num,
+                                                                                           per_page=3, error_out=True)
     context = {
-        "all_reviews": all_reviews,
         "title_page": "My Reviews",
+        "paginate_reviews": paginate_reviews,
     }
     return render_template("my_reviews.html", **context)
-

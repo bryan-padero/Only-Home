@@ -16,7 +16,8 @@ def property_page():
     selected_property_amenities = selected_property.amenities
     print(len(selected_property.owner.received_review))
     form = PropertyPageForm(
-        message=f"I would like to inquire about your property OnlyHome - (Property ID: {selected_property.id}) {selected_property.property_title}."
+        message=f"I would like to inquire about your property OnlyHome - (Property ID: {selected_property.id})"
+                f" {selected_property.property_title}."
                 f" Please contact me at your earliest convenience.")
     context = {
         "selected_property": selected_property,
@@ -42,7 +43,7 @@ def property_page():
     return render_template("property_page.html", **context)
 
 
-def get_average(owner):
+def get_average_rating(owner):
     rating = [owner_review.rating for owner_review in owner.received_review]
     avg_rating = float((sum(rating) / len(rating))) if owner.received_review else None
     return avg_rating
@@ -52,18 +53,24 @@ def get_average(owner):
 def review():
     owner_id = request.args.get("owner_id")
     owner = User.query.get_or_404(owner_id)
+    page_num = request.args.get("page_num")
+    page_num = 1 if page_num is None else int(page_num)
+    paginate_reviews = Review.query.filter(Review.reviewee_id == owner.id).paginate(page=page_num,
+                                                                                    per_page=3, error_out=True)
     if current_user.is_authenticated:
         form = ReviewForm(name=f"{current_user.first_name} {current_user.last_name}",
                           email=current_user.email)
         form.mobile.data = current_user.mobile if current_user.mobile else "N/A"
     else:
         form = ReviewForm()
-    avg_rating = get_average(owner)
+    avg_rating = get_average_rating(owner)
+    avg_rating = round(avg_rating, 1) if avg_rating else None
     context = {
         "title_page": "Review",
         "form": form,
         "owner": owner,
         "avg_rating": avg_rating,
+        "paginate_reviews": paginate_reviews,
     }
     if form.validate_on_submit():
         if current_user.is_authenticated:
