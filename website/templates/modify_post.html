@@ -142,7 +142,7 @@
                 {{ form.map_url.label(class_="form-label pt-2") }} {{ form.map_url(class_="form-control pt-2") }}
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 mb-2">
             <div class="container-fluid px-0">
                 <p>Amenities</p>
                 <div class="row g-2 form-group">
@@ -162,11 +162,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-6">
-            <a href="{{ url_for('account.my_posts') }}" class="btn btn-dark w-100">Cancel</a>
+        <div class="col-md-6 col-6 d-flex justify-content-end">
+            <a href="{{ url_for('account.my_posts') }}" class="btn btn-dark w-50">Cancel</a>
         </div>
-        <div class="col-md-6 col-6 pb-2">
-            {{ form.submit(class_="form-control btn btn-success" ) }}
+        <div class="col-md-6 col-6 d-flex justify-content-start">
+            {{ form.submit(class_="form-control btn btn-success w-50" ) }}
         </div>
     </form>
     {{ ckeditor.load() }}

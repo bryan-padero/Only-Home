@@ -6,12 +6,12 @@
     <div class="row g-3">
         {% for property in user_properties %}
         <div class="col-md-4 col-12">
-            <div class="card rounded-0">
+            <div class="card rounded-2">
                 <a href="{{ url_for('page.property_page', property_id=property.id) }}">
                     {% for img in property_img %}
                     {% if img.property_id == property.id %}
                     <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name ) }}" alt=""
-                         class="img-fluid card-img rounded-0" style="height:22rem;">
+                         class="img-fluid card-img rounded-0" style="height:20rem;">
                     {% endif %}
                     {% if not property.images and loop.index == 1 %}
                     <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}" alt=""
