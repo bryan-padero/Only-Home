@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content%}
+<div class="container">
+    <h2 class="my-3 ps-0">Review</h2>
+    <div class="row d-flex justify-content-center border border-1 rounded-2 m-0 py-5">
+        <div class="col-md-6">
+            <table class="table table-borderless">
+                <thead>
+                <tr>
+                    <td class="ps-0"><h4 class="text-success">Reviews</h4></td>
+                </tr>
+                </thead>
+                <tbody>
+                {% for review in all_reviews %}
+                <tr>
+                    <td class="ps-0">
+                        <div class="d-flex align-items-center mb-2 col-6">
+                            {% if review.reviewer.profile_pic: %}
+                            <img src="{{ url_for('static', filename='assets/img/profile_pictures/' + review.reviewer.profile_pic) }}"
+                                 class="img-fluid rounded-circle" style="height:3rem;width:3rem;"> <p class="mb-0 ps-2"> {{ review.reviewer.first_name }}</p>
+                            {% else: %}
+                            <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                                 class="img-fluid rounded-circle" style="height:6rem;width:6rem;"> {{ review.reviewer.first_name }}
+                            {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="ps-0 pt-0 text-success">{% for start in range(review.rating) %}{%if review.rating < 5%}<i class="fa fa-star"></i>{%endif%}{% endfor %}{{ review.rating }} Reviewed on {{ review.created_at.strftime('%d %b %Y') }}</td>
+                    <td class="ps-0">{{ review.comment }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

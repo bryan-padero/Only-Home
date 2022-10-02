@@ -4,6 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.utils import secure_filename
 from website.forms import *
 from website.models.property import *
+from website.models.user import Review
 from website import db
 import os
 
@@ -290,3 +291,16 @@ def delete_post_item():
         flash(f"Post {post_img_to_delete.image_name} Deleted", "success")
     db.session.commit()
     return redirect(url_for("account.my_posts", title_page="My Posts"))
+
+
+@account.route("/my_reviews", methods=["POST", "GET"])
+@login_required
+def my_reviews():
+    all_reviews = Review.query.filter_by(reviewee_id=current_user.id).all()
+    print(all_reviews)
+    context = {
+        "all_reviews": all_reviews,
+        "title_page": "My Reviews",
+    }
+    return render_template("my_reviews.html", **context)
+
