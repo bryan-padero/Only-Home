@@ -5,7 +5,7 @@ from werkzeug.utils import secure_filename
 from website.forms import *
 from website.models.property import *
 from website.models.user import Review
-from website import db
+from website.extensions import db
 import os
 
 

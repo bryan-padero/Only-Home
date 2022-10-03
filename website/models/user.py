@@ -1,4 +1,4 @@
-from website import db
+from website.extensions import db
 from flask_login import UserMixin
 from website.models.inquiry import *
 from sqlalchemy.sql import func

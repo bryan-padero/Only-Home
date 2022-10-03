@@ -1,4 +1,4 @@
-from website import db
+from website.extensions import db
 from sqlalchemy.sql import func
 from datetime import datetime
 

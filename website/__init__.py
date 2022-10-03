@@ -1,13 +1,8 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_bootstrap import Bootstrap
-from flask_migrate import Migrate
-from flask_login import LoginManager
-from flask_ckeditor import CKEditor
 from os import path
+from website.extensions import *
 
-db = SQLAlchemy()
-ckeditor = CKEditor()
+
 DB_NAME = "app_database.db"
 
 
@@ -18,14 +13,8 @@ def create_app():
     # DB Config
     app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DB_NAME}"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    migrate = Migrate(app, db)
+    migrate.init_app(app, db, render_as_batch=True)
     db.init_app(app)
-
-    # Flask Bootstrap
-    Bootstrap(app)
-
-    #Flask CKEditor
-    ckeditor.init_app(app)
 
     from website.routes.account import account
     from website.routes.auth import auth
@@ -38,13 +27,15 @@ def create_app():
     app.register_blueprint(page, url_prefix='/')
 
     from .models.user import User
-
     create_database(app)
 
+    # Flask Bootstrap
+    bootstrap.init_app(app)
+
+    # Flask CKEditor
+    ckeditor.init_app(app)
+
     # Flask Login Manager
-    login_manager = LoginManager()
-    login_manager.login_view = "auth.login"
-    login_manager.login_message_category = "danger"
     login_manager.init_app(app)
 
     @login_manager.user_loader

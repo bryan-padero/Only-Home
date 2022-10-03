@@ -4,7 +4,7 @@ from website.forms import PropertyPageForm, ReviewForm
 from website.models.property import Property
 from website.models.inquiry import Inquiry
 from website.models.user import User, Review
-from website import db
+from website.extensions import db
 
 page = Blueprint("page", __name__)
 
