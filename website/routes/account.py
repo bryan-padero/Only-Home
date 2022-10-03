@@ -48,6 +48,7 @@ def post_new_property(form):
                             property_type=form.type.data,
                             city=form.city.data,
                             location=form.location.data,
+                            zip_code=form.zip_code.data,
                             video_url=form.video_url.data,
                             map_url=form.map_url.data,
                             price=form.price.data,
@@ -209,6 +210,7 @@ def fill_property_to_update_forms(property_to_update):
                         type=property_to_update.property_type,
                         city=property_to_update.city,
                         location=property_to_update.location,
+                        zip_code=property_to_update.zip_code,
                         map_url=property_to_update.map_url,
                         video_url=property_to_update.video_url,
                         price=property_to_update.price,
@@ -228,6 +230,7 @@ def update_property_forms(property_to_update, form):
     property_to_update.property_type = form.type.data
     property_to_update.city = form.city.data
     property_to_update.location = form.location.data
+    property_to_update.zip_code = form.zip_code.data
     property_to_update.video_url = form.video_url.data
     property_to_update.map_url = form.map_url.data
     property_to_update.price = form.price.data

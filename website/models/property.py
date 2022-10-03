@@ -13,6 +13,7 @@ class Property(db.Model):
     property_type = db.Column(db.String(100), nullable=False)
     city = db.Column(db.String(100), nullable=False)
     location = db.Column(db.String(100), nullable=False)
+    zip_code = db.Column(db.String(100))
     map_url = db.Column(db.String(100), nullable=False)
     video_url = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Integer, nullable=False)

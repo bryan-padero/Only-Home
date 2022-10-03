@@ -52,6 +52,7 @@ class PropertyForm(FlaskForm):
     type = SelectField("Property Type", choices=types, validators=[DataRequired()])
     city = SelectField("City", choices=cities, validators=[DataRequired()])
     location = StringField("Location", validators=[DataRequired()])
+    zip_code = StringField("Zip Code", validators=[DataRequired()])
     map_url = StringField("Map URL", validators=[DataRequired()])
     video_url = StringField("Video URL", validators=[DataRequired()])
     price = IntegerField("Price", validators=[DataRequired()])

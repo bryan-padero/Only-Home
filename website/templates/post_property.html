@@ -18,14 +18,17 @@
         <div class="col-md-8">
             {{ form.images.label(class_="form-label") }} {{ form.images(class_="form-control") }}
         </div>
-        <div class="col-md-3">
-            {{ form.type.label(class="form-label") }} {{ form.type(class_="form-control") }}
+        <div class="col-md-12">
+            {{ form.location.label(class="form-label") }} {{ form.location(class_="form-control") }}
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             {{ form.city.label(class="form-label") }} {{ form.city(class_="form-control") }}
         </div>
-        <div class="col-md-6">
-            {{ form.location.label(class="form-label") }} {{ form.location(class_="form-control") }}
+        <div class="col-md-4">
+            {{ form.zip_code.label(class="form-label") }} {{ form.zip_code(class_="form-control") }}
+        </div>
+        <div class="col-md-4">
+            {{ form.type.label(class="form-label") }} {{ form.type(class_="form-control") }}
         </div>
         <div class="col-md-4">
             {% if current_user.mobile %}
