@@ -4,7 +4,7 @@ from website.forms import PropertyPageForm, ReviewForm
 from website.models.property import Property
 from website.models.inquiry import Inquiry
 from website.models.user import User, Review
-from website.extensions import db
+from website.extensions import db, or_
 
 page = Blueprint("page", __name__)
 
@@ -54,6 +54,8 @@ def review():
     owner_id = request.args.get("owner_id")
     owner = User.query.get_or_404(owner_id)
     page_num = request.args.get("page_num")
+    avg_rating = get_average_rating(owner)
+    avg_rating = round(avg_rating, 1) if avg_rating else None
     page_num = 1 if page_num is None else int(page_num)
     paginate_reviews = Review.query.filter(Review.reviewee_id == owner.id).paginate(page=page_num,
                                                                                     per_page=3, error_out=True)
@@ -63,8 +65,6 @@ def review():
         form.mobile.data = current_user.mobile if current_user.mobile else "N/A"
     else:
         form = ReviewForm()
-    avg_rating = get_average_rating(owner)
-    avg_rating = round(avg_rating, 1) if avg_rating else None
     context = {
         "title_page": "Review",
         "form": form,
@@ -85,3 +85,15 @@ def review():
         else:
             flash("Please login first to submit review", "danger")
     return render_template("review.html", **context)
+
+
+@page.route("/prorperty_grid", methods=["POST", "GET"])
+def property_grid():
+    properties = Property.query.all()
+    search_query = request.form.get("search_query")
+    print(search_query)
+    if request.method == "POST":
+        properties = Property.query.filter(
+            or_(Property.location.like(f"%{search_query}%"), Property.zip_code.like(f"%{search_query}%"),
+                Property.city.like(f"%{search_query}%"))).all()
+    return render_template("property_grid.html", properties=properties)

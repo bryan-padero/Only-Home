@@ -1,10 +1,13 @@
-from sqlalchemy import MetaData
+from sqlalchemy import MetaData, or_
 from flask_sqlalchemy import SQLAlchemy
 from flask_ckeditor import CKEditor
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from flask_wtf.csrf import CSRFProtect
 
+
+# Flask Migrate "ValueError: Constraint must have a name" Solution
 metadata = MetaData(
     naming_convention={
     "ix": 'ix_%(column_0_label)s',
@@ -31,3 +34,6 @@ login_manager.login_message_category = "danger"
 
 # Flask Bootstrap
 bootstrap = Bootstrap()
+
+# Flask CSRF Protect
+csrf = CSRFProtect()

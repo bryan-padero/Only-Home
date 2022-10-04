@@ -38,6 +38,9 @@ def create_app():
     # Flask Login Manager
     login_manager.init_app(app)
 
+    # Flask CSRF Protect
+    csrf.init_app(app)
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))

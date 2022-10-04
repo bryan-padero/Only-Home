@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <nav class="navbar bg-light navbar-expand-lg">
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                     aria-labelledby="offcanvasNavbarLabel">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <ul class="navbar-nav justify-content-start flex-grow-1">
+                            <li class="nav-item dropdown p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Property Type
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Price
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Beds
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown  p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Baths
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Action</a></li>
+                                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Garages
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <form method="POST">
+                                        <li><input type="text" class="form-control"></li>
+                                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    </form>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        {% for property in properties %}
+        <div class="col-md-4 col-12">
+            <div class="card rounded-0">
+                <a href="{{ url_for('page.property_page', property_id=property.id) }}">
+                    {% if property.images %}
+                    <div id="carouselExampleControls{{property.id}}" class="carousel slide carousel-fade"
+                         data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for num in range(property.images|length) %}
+                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="{{ num }}"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner bg-dark">
+                            {% for img in property.images %}
+                            {% if loop.index == 1 %}
+                            <div class="carousel-item active d-flex justify-content-center">
+                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                     class="img-fluid" style="height:25rem;" alt="...">
+                            </div>
+                            {% else %}
+                            <div class="carousel-item d-flex justify-content-center">
+                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                     class="img-fluid" style="height:25rem;" alt="...">
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleControls{{property.id}}"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleControls{{property.id}}"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="d-flex justify-content-center w-100">
+                        <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                             class="img-fluid" style="height:25rem;"/>
+                    </div>
+                    {% endif %}
+                </a>
+                <div class=" card-body bg-light">
+                    <h4 class="card-title">
+                        <a href="{{ url_for('page.property_page', property_id=property.id) }}"
+                           class="text-success">{{ property.property_title }}</a>
+                    </h4>
+                    <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
+                        property.location }}, {{ property.city }}</p>
+                    <div class="card-footer border-0 bg-light p-0 text-dark">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item border-0 ps-0 py-0 bg-light"><i
+                                    class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area
+                                }}m<sup>2</sup></li>
+                        </ul>
+                    </div>
+                    <div class="text-dark">
+                        <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
+                        <div><i class="fa-solid fa-money-check-dollar"></i> {{ property.payment_mode }}</div>
+                    </div>
+                    <div class="text-success fs-4">
+                        <i class="fa-solid fa-dollar-sign fa-sm"></i> {{ property.price }}
+                    </div>
+                    <div class="d-flex justify-content-start mt-2">
+                        <form method="POST"
+                              action="{{ url_for('account.modify_post', property_id=property.id) }}">
+                            <button type="submit" class="btn btn-outline-success btn-sm me-2">Modify</button>
+                        </form>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{ property.id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}
