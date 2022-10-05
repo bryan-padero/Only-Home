@@ -5,6 +5,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
+from sqlalchemy.sql import func
 
 
 # Flask Migrate "ValueError: Constraint must have a name" Solution

@@ -3,9 +3,10 @@
 <div class="container">
     <div class="row">
         <nav class="navbar bg-light navbar-expand-lg">
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form class="d-flex input-group" role="search">
+                <input type="text" class="form-control" placeholder="Address, City or Zip"
+                           aria-label="Recipient's username" aria-describedby="button-addon2" name="search_query">
+                    <button class="btn btn-outline-secondary text-white bg-success fs-5" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
             <div class="container-fluid">
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
@@ -27,12 +28,9 @@
                                     Property Type
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    {% for property_type in available_property_types: %}
+                                    <li><a class="dropdown-item" href="#">{{ property_type }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </li>
                             <li class="nav-item dropdown p-1">
@@ -57,12 +55,9 @@
                                     Beds
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    {% for num_of_bed in available_num_of_bed %}
+                                    <li><a class="dropdown-item" href="#">{{ num_of_bed }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </li>
                             <li class="nav-item dropdown  p-1">
@@ -72,12 +67,9 @@
                                     Baths
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                    {% for num_of_bath in available_num_of_bath %}
+                                    <li><a class="dropdown-item" href="#">{{ num_of_bath }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </li>
                             <li class="nav-item dropdown p-1">
@@ -87,11 +79,21 @@
                                     Garages
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <form method="POST">
-                                        <li><input type="text" class="form-control"></li>
-                                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                    </form>
+                                    {% for num_of_garage in available_num_of_garage %}
+                                    <li><a class="dropdown-item" href="#">{{ num_of_garage }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown p-1">
+                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+                                    Furnishing
+                                </a>
+                                <ul class="dropdown-menu">
+                                    {% for furnishing in available_furnishing %}
+                                    <li><a class="dropdown-item" href="#">{{ furnishing }}</a></li>
+                                    {% endfor %}
                                 </ul>
                             </li>
                         </ul>
@@ -99,7 +101,7 @@
                 </div>
             </div>
         </nav>
-        {% for property in properties %}
+        {% for property in all_properties %}
         <div class="col-md-4 col-12">
             <div class="card rounded-0">
                 <a href="{{ url_for('page.property_page', property_id=property.id) }}">

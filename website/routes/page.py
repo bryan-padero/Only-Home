@@ -4,7 +4,7 @@ from website.forms import PropertyPageForm, ReviewForm
 from website.models.property import Property
 from website.models.inquiry import Inquiry
 from website.models.user import User, Review
-from website.extensions import db, or_
+from website.extensions import db, or_, func
 
 page = Blueprint("page", __name__)
 
@@ -87,13 +87,34 @@ def review():
     return render_template("review.html", **context)
 
 
-@page.route("/prorperty_grid", methods=["POST", "GET"])
+def clean_query_list(query_list):
+    query_list = [query[0] for query in query_list]
+    return query_list
+
+
+@page.route("/property_grid", methods=["POST", "GET"])
 def property_grid():
-    properties = Property.query.all()
+    all_properties = Property.query.all()
     search_query = request.form.get("search_query")
-    print(search_query)
+    filtered_properties = None
+    available_property_types = clean_query_list(db.session.query(Property.property_type).distinct().all())
+    available_num_of_bath = clean_query_list(db.session.query(Property.num_of_bath).distinct().all())
+    available_num_of_bed = clean_query_list(db.session.query(Property.num_of_bed).distinct().all())
+    available_num_of_garage = clean_query_list(db.session.query(Property.num_of_garage).distinct().all())
+    available_furnishing = clean_query_list(db.session.query(Property.furnishing).distinct().all())
+
     if request.method == "POST":
-        properties = Property.query.filter(
+        filtered_properties = Property.query.filter(
             or_(Property.location.like(f"%{search_query}%"), Property.zip_code.like(f"%{search_query}%"),
                 Property.city.like(f"%{search_query}%"))).all()
-    return render_template("property_grid.html", properties=properties)
+    context = {
+        "title_page": "Properties",
+        "all_properties": all_properties,
+        "filtered_properties": filtered_properties,
+        "available_property_types": available_property_types,
+        "available_num_of_bath": available_num_of_bath,
+        "available_num_of_bed": available_num_of_bed,
+        "available_num_of_garage": available_num_of_garage,
+        "available_furnishing": available_furnishing,
+    }
+    return render_template("property_grid.html", **context)
