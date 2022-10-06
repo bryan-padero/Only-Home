@@ -101,9 +101,11 @@ def property_grid():
     available_num_of_bath = clean_query_list(db.session.query(Property.num_of_bath).distinct().all())
     available_num_of_bed = clean_query_list(db.session.query(Property.num_of_bed).distinct().all())
     available_num_of_garage = clean_query_list(db.session.query(Property.num_of_garage).distinct().all())
-    available_furnishing = clean_query_list(db.session.query(Property.furnishing).distinct().all())
+    available_furnishings = clean_query_list(db.session.query(Property.furnishing).distinct().all())
 
     if request.method == "POST":
+        property_type = request.form.get("type")
+        print(property_type)
         filtered_properties = Property.query.filter(
             or_(Property.location.like(f"%{search_query}%"), Property.zip_code.like(f"%{search_query}%"),
                 Property.city.like(f"%{search_query}%"))).all()
@@ -115,6 +117,6 @@ def property_grid():
         "available_num_of_bath": available_num_of_bath,
         "available_num_of_bed": available_num_of_bed,
         "available_num_of_garage": available_num_of_garage,
-        "available_furnishing": available_furnishing,
+        "available_furnishings": available_furnishings,
     }
     return render_template("property_grid.html", **context)

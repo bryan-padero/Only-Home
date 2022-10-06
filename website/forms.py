@@ -80,3 +80,4 @@ class ReviewForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired()], render_kw={"placeholder": "Email"})
     mobile = TelField("Mobile", validators=[DataRequired()], render_kw={"placeholder": "Mobile"})
     submit = SubmitField("Submit")
+

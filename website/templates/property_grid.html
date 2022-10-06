@@ -1,106 +1,97 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <nav class="navbar bg-light navbar-expand-lg">
-            <form class="d-flex input-group" role="search">
-                <input type="text" class="form-control" placeholder="Address, City or Zip"
-                           aria-label="Recipient's username" aria-describedby="button-addon2" name="search_query">
-                    <button class="btn btn-outline-secondary text-white bg-success fs-5" type="submit" id="button-addon2"><i class="fa-solid fa-magnifying-glass"></i></button>
-            </form>
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-                     aria-labelledby="offcanvasNavbarLabel">
-                    <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body">
-                        <ul class="navbar-nav justify-content-start flex-grow-1">
-                            <li class="nav-item dropdown p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Property Type
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for property_type in available_property_types: %}
-                                    <li><a class="dropdown-item" href="#">{{ property_type }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Price
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="#">Action</a></li>
-                                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Beds
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for num_of_bed in available_num_of_bed %}
-                                    <li><a class="dropdown-item" href="#">{{ num_of_bed }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown  p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Baths
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for num_of_bath in available_num_of_bath %}
-                                    <li><a class="dropdown-item" href="#">{{ num_of_bath }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Garages
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for num_of_garage in available_num_of_garage %}
-                                    <li><a class="dropdown-item" href="#">{{ num_of_garage }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown p-1">
-                                <a class="btn btn-outline-success dropdown-toggle" href="#" role="button"
-                                   data-bs-toggle="dropdown"
-                                   aria-expanded="false">
-                                    Furnishing
-                                </a>
-                                <ul class="dropdown-menu">
-                                    {% for furnishing in available_furnishing %}
-                                    <li><a class="dropdown-item" href="#">{{ furnishing }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+<nav class="navbar navbar-expand-lg bg-white fixed-top" style="top:78px;margin:auto;width:70rem;">
+    <div class="container px-0">
+        <button class="ms-2 navbar-toggler p-2 text-success" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <i class="fa-sharp fa-solid fa-filter fa-lg"></i>
+        </button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+             aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                        aria-label="Close"></button>
             </div>
-        </nav>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav">
+                    <form class="input-group input-group-sm my-auto" method="POST"
+                          action="{{ url_for('page.property_grid') }}" style="width:22rem;" role="search">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                        <input type="text" class="form-control " placeholder="Address, City or Zip"
+                               name="search_query">
+                        <button class="btn btn-outline-secondary text-white bg-success btn-sm" type="submit"
+                                id="button-addon2"><i
+                                class="fa-solid fa-magnifying-glass fa-sm"></i></button>
+                    </form>
+                    <li class="p-1">
+                        <div class="input-group">
+                            <select class="btn btn-outline-success btn-sm" name="type" id="propertyType">
+                                <option selected>Property Type</option>
+                                {% for type in available_property_types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown p-1">
+                        <a class="btn btn-outline-success dropdown-toggle btn-sm" href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            Price
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><input type="text"></li>
+                            <li><input type="text"></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown p-1">
+                        <div class="input-group">
+                            <select class="btn btn-outline-success btn-sm" id="numOfBed">
+                                <option selected>Beds</option>
+                                {% for num in available_num_of_bed %}
+                                <option value="{{ type }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown  p-1">
+                        <div class="input-group">
+                            <select class="btn btn-outline-success btn-sm" id="numOfBath">
+                                <option selected>Baths</option>
+                                {% for num in available_num_of_bath %}
+                                <option value="{{ type }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown p-1">
+                        <div class="input-group">
+                            <select class="btn btn-outline-success btn-sm" id="numOfGarage">
+                                <option selected>Garages</option>
+                                {% for num in available_num_of_garage %}
+                                <option value="{{ type }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown p-1">
+                        <div class="input-group">
+                            <select class="btn btn-outline-success btn-sm" id="furnishing">
+                                <option selected>Furnishing</option>
+                                {% for num in available_furnishings %}
+                                <option value="{{ type }}">{{ num }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="container" style="padding-top:140px">
+    <div class="row g-3">
         {% for property in all_properties %}
         <div class="col-md-4 col-12">
             <div class="card rounded-0">
@@ -197,4 +188,5 @@
         {% endfor %}
     </div>
 </div>
+
 {% endblock content %}
