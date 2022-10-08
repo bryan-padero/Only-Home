@@ -26,7 +26,7 @@ def create_app():
     app.register_blueprint(api, url_prefix='/')
     app.register_blueprint(page, url_prefix='/')
 
-    from .models.user import User
+    # If db did not exist
     create_database(app)
 
     # Flask Bootstrap
@@ -40,6 +40,8 @@ def create_app():
 
     # Flask CSRF Protect
     csrf.init_app(app)
+
+    from .models.user import User
 
     @login_manager.user_loader
     def load_user(user_id):
