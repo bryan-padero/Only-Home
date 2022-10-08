@@ -252,11 +252,12 @@
 <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ url_for('static', filename='assets/vendor/php-email-form/validate.js') }}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 <!-- Template Main JS File -->
 <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='assets/js/virtual-select.min.js') }}"></script>
-
+<script type="text/javascript" src="{{ url_for('static', filename='assets/js/form.js') }}"></script>
 <script type="text/javascript">
     VirtualSelect.init({
       ele: '#multipleSelect',
@@ -266,15 +267,6 @@
       placeholder: 'Amenities',
       searchByStartsWith: true, // Search options by startsWith() method
     });
-
-
-
-
-
-
-
-
-
 </script>
 </body>
 </html>

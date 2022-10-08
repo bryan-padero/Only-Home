@@ -120,3 +120,28 @@ def property_grid():
         "available_furnishings": available_furnishings,
     }
     return render_template("property_grid.html", **context)
+
+
+@page.route("/process", methods=["POST", "GET"])
+def process():
+    property_type = request.form["property_type"]
+    # num_of_bed = request.form["num_of_bed"]
+    # num_of_bath = request.form["num_of_bath"]
+    # num_of_garage = request.form["num_of_garage"]
+    # furnishing = request.form["furnishing"]
+    if request.method == "POST":
+        if property_type:
+            all_properties = Property.query.filter_by(property_type=property_type).all()
+        # if num_of_bed:
+        #     all_properties = Property.query.filter_by(num_of_bed=num_of_bed).all()
+        # if num_of_bath:
+        #     all_properties = Property.query.filter_by(num_of_bath=num_of_bath).all()
+        # if num_of_garage:
+        #     all_properties = Property.query.filter_by(num_of_garage=num_of_garage).all()
+        # if furnishing:
+        #     all_properties = Property.query.filter_by(furnishing=furnishing).all()
+    context = {
+        "all_properties": all_properties,
+        "title_page": "Properties",
+    }
+    return render_template("response.html", **context)
