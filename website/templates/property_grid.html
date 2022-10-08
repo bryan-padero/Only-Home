@@ -16,15 +16,15 @@
             <div class="offcanvas-body" id="filters">
                 <ul class="navbar-nav">
                     <li class="p-1">
-                    <form class="input-group input-group-sm my-auto" method="POST"
-                          action="{{ url_for('page.property_grid') }}" style="width:22rem;" role="search">
-                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                        <input type="text" class="form-control " placeholder="Address, City or Zip"
-                               name="search_query">
-                        <button class="btn btn-outline-secondary text-white bg-success btn-sm" type="submit"
-                                id="button-addon2"><i
-                                class="fa-solid fa-magnifying-glass fa-sm"></i></button>
-                    </form>
+                        <form class="input-group input-group-sm my-auto" method="POST"
+                              action="{{ url_for('page.property_grid') }}" style="width:22rem;" role="search">
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                            <input type="text" class="form-control " placeholder="Address, City or Zip"
+                                   name="search_query">
+                            <button class="btn btn-outline-secondary text-white bg-success btn-sm" type="submit"
+                                    id="button-addon2"><i
+                                    class="fa-solid fa-magnifying-glass fa-sm"></i></button>
+                        </form>
                     </li>
                     <li class="p-1">
                         <div class="input-group">
@@ -92,6 +92,102 @@
         </div>
     </div>
 </nav>
-<div class="container" id="properties" style="padding-top:140px">
+<div class="container" id="properties" style="padding-top:60px">
+    <div class="row g-3">
+        {% for property in all_properties %}
+        <div class="col-md-4 col-12">
+            <div class="card rounded-0">
+                <a href="{{ url_for('page.property_page', property_id=property.id) }}">
+                    {% if property.images %}
+                    <div id="carouselExampleControls{{property.id}}" class="carousel slide carousel-fade"
+                         data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for num in range(property.images|length) %}
+                            <button type="button" data-bs-target="#carouselExampleIndicators"
+                                    data-bs-slide-to="{{ num }}"
+                                    class="active" aria-current="true" aria-label="Slide 1"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner bg-dark">
+                            {% for img in property.images %}
+                            {% if loop.index == 1 %}
+                            <div class="carousel-item active d-flex justify-content-center">
+                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                     class="img-fluid" style="height:25rem;" alt="...">
+                            </div>
+                            {% else %}
+                            <div class="carousel-item d-flex justify-content-center">
+                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                     class="img-fluid" style="height:25rem;" alt="...">
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button"
+                                data-bs-target="#carouselExampleControls{{property.id}}"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button"
+                                data-bs-target="#carouselExampleControls{{property.id}}"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    {% else %}
+                    <div class="d-flex justify-content-center w-100">
+                        <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                             class="img-fluid" style="height:25rem;"/>
+                    </div>
+                    {% endif %}
+                </a>
+                <div class=" card-body bg-light">
+                    <h4 class="card-title">
+                        <a href="{{ url_for('page.property_page', property_id=property.id) }}"
+                           class="text-success">{{ property.property_title }}</a>
+                    </h4>
+                    <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
+                        property.location }}, {{ property.city }}</p>
+                    <div class="card-footer border-0 bg-light p-0 text-dark">
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item border-0 ps-0 py-0 bg-light"><i
+                                    class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
+                            </li>
+                            <li class="list-group-item border-0 py-0 bg-light"><i
+                                    class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area
+                                }}m<sup>2</sup></li>
+                        </ul>
+                    </div>
+                    <div class="text-dark">
+                        <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
+                        <div><i class="fa-solid fa-money-check-dollar"></i> {{ property.payment_mode }}</div>
+                    </div>
+                    <div class="text-success fs-4">
+                        <i class="fa-solid fa-dollar-sign fa-sm"></i> {{ property.price }}
+                    </div>
+                    <div class="d-flex justify-content-start mt-2">
+                        <form method="POST"
+                              action="{{ url_for('account.modify_post', property_id=property.id) }}">
+                            <button type="submit" class="btn btn-outline-success btn-sm me-2">Modify</button>
+                        </form>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop{{ property.id }}">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
 {% endblock content %}

@@ -96,7 +96,6 @@ def clean_query_list(query_list):
 def property_grid():
     all_properties = Property.query.all()
     search_query = request.form.get("search_query")
-    filtered_properties = None
     available_property_types = clean_query_list(db.session.query(Property.property_type).distinct().all())
     available_num_of_bath = clean_query_list(db.session.query(Property.num_of_bath).distinct().all())
     available_num_of_bed = clean_query_list(db.session.query(Property.num_of_bed).distinct().all())
@@ -104,15 +103,12 @@ def property_grid():
     available_furnishings = clean_query_list(db.session.query(Property.furnishing).distinct().all())
 
     if request.method == "POST":
-        property_type = request.form.get("type")
-        print(property_type)
-        filtered_properties = Property.query.filter(
+        all_properties = Property.query.filter(
             or_(Property.location.like(f"%{search_query}%"), Property.zip_code.like(f"%{search_query}%"),
                 Property.city.like(f"%{search_query}%"))).all()
     context = {
         "title_page": "Properties",
         "all_properties": all_properties,
-        "filtered_properties": filtered_properties,
         "available_property_types": available_property_types,
         "available_num_of_bath": available_num_of_bath,
         "available_num_of_bed": available_num_of_bed,
