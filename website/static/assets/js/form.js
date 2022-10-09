@@ -1,6 +1,5 @@
 $(document).ready(function(){
     var token =  $('input[name="csrf_token"]').attr('value');
-    load_data();
     function load_data(property_type='')
     {
         $.ajax({
