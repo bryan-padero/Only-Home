@@ -96,11 +96,13 @@ def clean_query_list(query_list):
 def property_grid():
     all_properties = Property.query.all()
     search_query = request.form.get("search_query")
+    available_cities = clean_query_list(db.session.query(Property.city).distinct().all())
     available_property_types = clean_query_list(db.session.query(Property.property_type).distinct().all())
-    available_num_of_bath = clean_query_list(db.session.query(Property.num_of_bath).distinct().all())
-    available_num_of_bed = clean_query_list(db.session.query(Property.num_of_bed).distinct().all())
-    available_num_of_garage = clean_query_list(db.session.query(Property.num_of_garage).distinct().all())
+    available_num_of_baths = clean_query_list(db.session.query(Property.num_of_bath).distinct().all())
+    available_num_of_beds = clean_query_list(db.session.query(Property.num_of_bed).distinct().all())
+    available_num_of_garages = clean_query_list(db.session.query(Property.num_of_garage).distinct().all())
     available_furnishings = clean_query_list(db.session.query(Property.furnishing).distinct().all())
+    available_payment_modes = clean_query_list(db.session.query(Property.payment_mode).distinct().all())
 
     if request.method == "POST":
         all_properties = Property.query.filter(
@@ -109,35 +111,14 @@ def property_grid():
     context = {
         "title_page": "Properties",
         "all_properties": all_properties,
+        "available_cities": available_cities,
         "available_property_types": available_property_types,
-        "available_num_of_bath": available_num_of_bath,
-        "available_num_of_bed": available_num_of_bed,
-        "available_num_of_garage": available_num_of_garage,
+        "available_num_of_baths": available_num_of_baths,
+        "available_num_of_beds": available_num_of_beds,
+        "available_num_of_garages": available_num_of_garages,
         "available_furnishings": available_furnishings,
+        "available_payment_modes": available_payment_modes,
     }
     return render_template("property_grid.html", **context)
 
 
-@page.route("/process", methods=["POST", "GET"])
-def process():
-    property_type = request.form["property_type"]
-    # num_of_bed = request.form["num_of_bed"]
-    # num_of_bath = request.form["num_of_bath"]
-    # num_of_garage = request.form["num_of_garage"]
-    # furnishing = request.form["furnishing"]
-    if request.method == "POST":
-        if property_type:
-            all_properties = Property.query.filter_by(property_type=property_type).all()
-        # if num_of_bed:
-        #     all_properties = Property.query.filter_by(num_of_bed=num_of_bed).all()
-        # if num_of_bath:
-        #     all_properties = Property.query.filter_by(num_of_bath=num_of_bath).all()
-        # if num_of_garage:
-        #     all_properties = Property.query.filter_by(num_of_garage=num_of_garage).all()
-        # if furnishing:
-        #     all_properties = Property.query.filter_by(furnishing=furnishing).all()
-    context = {
-        "all_properties": all_properties,
-        "title_page": "Properties",
-    }
-    return render_template("response.html", **context)

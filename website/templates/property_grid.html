@@ -1,193 +1,374 @@
 {% extends "base.html" %}
 {% block content %}
-<nav class="navbar navbar-expand-lg bg-white fixed-top" style="top:78px;margin:auto;width:70rem;">
-    <div class="container px-0">
-        <button class="ms-2 navbar-toggler p-2 text-success" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-            <i class="fa-sharp fa-solid fa-filter fa-lg"></i>
-        </button>
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
-             aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Offcanvas</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                        aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body" id="filters">
-                <ul class="navbar-nav">
-                    <li class="p-1">
-                        <form class="input-group input-group-sm my-auto" method="POST"
-                              action="{{ url_for('page.property_grid') }}" style="width:22rem;" role="search">
-                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                            <input type="text" class="form-control " placeholder="Address, City or Zip"
-                                   name="search_query">
-                            <button class="btn btn-outline-secondary text-white bg-success btn-sm" type="submit"
-                                    id="button-addon2"><i
-                                    class="fa-solid fa-magnifying-glass fa-sm"></i></button>
-                        </form>
+<div class="container mt-4 px-0">
+    <div class="row">
+        <div class="col-md-3">
+            <a class="btn d-md-none btn-outline-success ms-2 mb-2 " type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasResponsive" aria-controls="offcanvasResponsive"> Filter <i
+                    class="fa fa-filter"></i>
+            </a>
+            <div class="offcanvas-lg offcanvas-end" tabindex="-1" id="offcanvasResponsive"
+                 aria-labelledby="offcanvasResponsiveLabel">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+                            data-bs-target="#offcanvasResponsive" aria-label="Close"></button>
+                </div>
+                <h5 class="text-center">Search Listings <i class="fa fa-search"></i></h5>
+                <ul class="nav nav-pills my-4 justify-content-center d-flex" id="pills-tab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-basic-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-basic" type="button" role="tab" aria-controls="pills-basic"
+                                aria-selected="true">Basic
+                        </button>
                     </li>
-                    <li class="p-1">
-                        <div class="input-group">
-                            <select class="btn btn-outline-success btn-sm" name="type" id="property_type">
-                                <option selected value="">Property Type</option>
-                                {% for type in available_property_types %}
-                                <option value="{{ type }}">{{ type }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-sm" id="pills-advance-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-advance" type="button" role="tab" aria-controls="pills-advance"
+                                aria-selected="true">Advance
+                        </button>
                     </li>
-                    <li class="nav-item dropdown p-1">
-                        <a class="btn btn-outline-success dropdown-toggle btn-sm" href="#" role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            Price
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><input type="text"></li>
-                            <li><input type="text"></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown p-1">
-                        <div class="input-group">
-                            <select class="btn btn-outline-success btn-sm" id="num_of_bed">
-                                <option selected value="">Beds</option>
-                                {% for num in available_num_of_bed %}
-                                <option value="{{ num }}">{{ num }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown  p-1">
-                        <div class="input-group">
-                            <select class="btn btn-outline-success btn-sm" id="numOfBath">
-                                <option selected value="">Baths</option>
-                                {% for num in available_num_of_bath %}
-                                <option value="{{ num }}">{{ num }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown p-1">
-                        <div class="input-group">
-                            <select class="btn btn-outline-success btn-sm" id="numOfGarage">
-                                <option selected value="">Garages</option>
-                                {% for num in available_num_of_garage %}
-                                <option value="{{ num }}">{{ num }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown p-1">
-                        <div class="input-group">
-                            <select class="btn btn-outline-success btn-sm" id="furnishing">
-                                <option selected value="">Furnishing</option>
-                                {% for furnishing in available_furnishings %}
-                                <option value="{{ furnishing }}">{{ furnishing }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link nav-link-sm" id="pills-full-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-full" type="button" role="tab" aria-controls="pills-full"
+                                aria-selected="true">Full
+                        </button>
                     </li>
                 </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-<div class="container" id="properties" style="padding-top:60px">
-    <div class="row g-3">
-        {% for property in all_properties %}
-        <div class="col-md-4 col-12">
-            <div class="card rounded-0">
-                <a href="{{ url_for('page.property_page', property_id=property.id) }}">
-                    {% if property.images %}
-                    <div id="carouselExampleControls{{property.id}}" class="carousel slide carousel-fade"
-                         data-bs-ride="carousel">
-                        <div class="carousel-indicators">
-                            {% for num in range(property.images|length) %}
-                            <button type="button" data-bs-target="#carouselExampleIndicators"
-                                    data-bs-slide-to="{{ num }}"
-                                    class="active" aria-current="true" aria-label="Slide 1"></button>
-                            {% endfor %}
-                        </div>
-                        <div class="carousel-inner bg-dark">
-                            {% for img in property.images %}
-                            {% if loop.index == 1 %}
-                            <div class="carousel-item active d-flex justify-content-center">
-                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
-                                     class="img-fluid" style="height:25rem;" alt="...">
-                            </div>
-                            {% else %}
-                            <div class="carousel-item d-flex justify-content-center">
-                                <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
-                                     class="img-fluid" style="height:25rem;" alt="...">
-                            </div>
-                            {% endif %}
-                            {% endfor %}
-                        </div>
-                        <button class="carousel-control-prev" type="button"
-                                data-bs-target="#carouselExampleControls{{property.id}}"
-                                data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button"
-                                data-bs-target="#carouselExampleControls{{property.id}}"
-                                data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
-                    </div>
-                    {% else %}
-                    <div class="d-flex justify-content-center w-100">
-                        <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
-                             class="img-fluid" style="height:25rem;"/>
-                    </div>
-                    {% endif %}
-                </a>
-                <div class=" card-body bg-light">
-                    <h4 class="card-title">
-                        <a href="{{ url_for('page.property_page', property_id=property.id) }}"
-                           class="text-success">{{ property.property_title }}</a>
-                    </h4>
-                    <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
-                        property.location }}, {{ property.city }}</p>
-                    <div class="card-footer border-0 bg-light p-0 text-dark">
-                        <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item border-0 ps-0 py-0 bg-light"><i
-                                    class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
-                            </li>
-                            <li class="list-group-item border-0 py-0 bg-light"><i
-                                    class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
-                            </li>
-                            <li class="list-group-item border-0 py-0 bg-light"><i
-                                    class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
-                            </li>
-                            <li class="list-group-item border-0 py-0 bg-light"><i
-                                    class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area
-                                }}m<sup>2</sup></li>
-                        </ul>
-                    </div>
-                    <div class="text-dark">
-                        <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
-                        <div><i class="fa-solid fa-money-check-dollar"></i> {{ property.payment_mode }}</div>
-                    </div>
-                    <div class="text-success fs-4">
-                        <i class="fa-solid fa-dollar-sign fa-sm"></i> {{ property.price }}
-                    </div>
-                    <div class="d-flex justify-content-start mt-2">
-                        <form method="POST"
-                              action="{{ url_for('account.modify_post', property_id=property.id) }}">
-                            <button type="submit" class="btn btn-outline-success btn-sm me-2">Modify</button>
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-basic" role="tabpanel"
+                         aria-labelledby="pills-basic-tab"
+                         tabindex="0">
+                        <form method="POST" action="#">
+                            <ul class="list-group">
+                                <li class="list-group-item border-0">
+                                    <div class="input-group">
+                                        <h6>City</h6>
+                                        <select class="form-select form-select-sm w-100" name="city" id="city">
+                                            <option selected disabled>Select City</option>
+                                            {% for city in available_cities %}
+                                            <option value="{{ city }}">{{ city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Property Type</h6>
+                                        <select class="form-select form-select-sm w-100" name="type" id="type">
+                                            <option selected disabled>Select Type</option>
+                                            {% for type in available_property_types %}
+                                            <option value="{{ type }}">{{ type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-end">
+                                    <button class="btn btn-outline-secondary text-white bg-success btn-sm"
+                                            type="submit"
+                                            id="basic-button"><i
+                                            class="text-align-center fa-solid fa-magnifying-glass fa-sm"></i> Search
+                                    </button>
+                                </li>
+                            </ul>
                         </form>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-dark btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#staticBackdrop{{ property.id }}">
-                            Delete
-                        </button>
+                    </div>
+                    <div class="tab-pane fade" id="pills-advance" role="tabpanel" aria-labelledby="pills-advance-tab"
+                         tabindex="0">
+                        <form method="POST" action="#">
+                            <ul class="list-group">
+                                <li class="list-group-item border-0">
+                                    <div class="input-group">
+                                        <h6>City</h6>
+                                        <select class="form-select form-select-sm w-100" name="advance_city"
+                                                id="advance_city">
+                                            <option selected disabled>Select City</option>
+                                            {% for city in available_cities %}
+                                            <option value="{{ city }}">{{ city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Property Type</h6>
+                                        <select class="form-select form-select-sm w-100" name="advance_type"
+                                                id="advance_type">
+                                            <option selected disabled>Select Type</option>
+                                            {% for type in available_property_types %}
+                                            <option value="{{ type }}">{{ type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Bedrooms</h6>
+                                        <select class="form-select form-select-sm w-100" name="num_of_bed"
+                                                id="num_of_bed">
+                                            <option selected disabled>No. of Bedrooms</option>
+                                            {% for bed in available_num_of_beds %}
+                                            <option value="{{ bed }}">{{ bed }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Bathrooms</h6>
+                                        <select class="form-select form-select-sm w-100" name="num_of_bath"
+                                                id="num_of_bath">
+                                            <option selected disabled>No. of Bathrooms</option>
+                                            {% for bath in available_num_of_baths %}
+                                            <option value="{{ bath }}">{{ bath }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group row">
+                                        <h6 class="filter-title">Price Range</h6>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100" name="min"
+                                                   placeholder="Min">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100" name="max"
+                                                   placeholder="Max">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-end">
+                                    <button class="btn btn-outline-secondary text-white bg-success btn-sm"
+                                            type="submit"
+                                            id="advance_search_button"><i
+                                            class="text-align-center fa-solid fa-magnifying-glass fa-sm"></i> Search
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="tab-pane fade" id="pills-full" role="tabpanel" aria-labelledby="pills-full-tab"
+                         tabindex="0">
+                        <form method="POST" action="#">
+                            <ul class="list-group">
+                                <li class="list-group-item border-0">
+                                    <div class="input-group">
+                                        <h6>City</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_city"
+                                                id="full_city">
+                                            <option selected disabled>Select City</option>
+                                            {% for city in available_cities %}
+                                            <option value="{{ city }}">{{ city }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Property Type</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_type"
+                                                id="full_type">
+                                            <option selected disabled>Select Type</option>
+                                            {% for type in available_property_types %}
+                                            <option value="{{ type }}">{{ type }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Bedrooms</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_num_of_bed"
+                                                id="full_num_of_bed">
+                                            <option selected disabled>No. of Bedrooms</option>
+                                            {% for bed in available_num_of_beds %}
+                                            <option value="{{ bed }}">{{ bed }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Bathrooms</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_num_of_bath"
+                                                id="full_num_of_bath">
+                                            <option selected disabled>No. of Bathrooms</option>
+                                            {% for bath in available_num_of_baths %}
+                                            <option value="{{ bath }}">{{ bath }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Garages</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_num_of_garage"
+                                                id="full_num_of_garage">
+                                            <option selected disabled>No. of Garages</option>
+                                            {% for garage in available_num_of_garages %}
+                                            <option value="{{ garage }}">{{ garage }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Furnishing</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_furnishing"
+                                                id="full_furnishing">
+                                            <option selected disabled>Select Furnishing</option>
+                                            {% for furnishing in available_furnishings %}
+                                            <option value="{{ furnishing }}">{{ furnishing }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group">
+                                        <h6>Payment Mode</h6>
+                                        <select class="form-select form-select-sm w-100" name="full_payment_mode"
+                                                id="full_payment_mode">
+                                            <option selected disabled>Select Payment Mode</option>
+                                            {% for payment_mode in available_payment_modes %}
+                                            <option value="{{ payment_mode }}">{{ payment_mode }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group row">
+                                        <h6 class="filter-title">Price Range</h6>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100"
+                                                   name="full_price_min"
+                                                   placeholder="Min">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100"
+                                                   name="full_price_max"
+                                                   placeholder="Max">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="input-group row">
+                                        <h6 class="filter-title">Area Size (sqm)</h6>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100"
+                                                   name="full_area_min"
+                                                   placeholder="Min">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control form-control-sm w-100"
+                                                   name="full_area_max"
+                                                   placeholder="Max">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-end">
+                                    <button class="btn btn-outline-secondary text-white bg-success btn-sm"
+                                            type="submit"
+                                            id="full_search_button"><i
+                                            class="text-align-center fa-solid fa-magnifying-glass fa-sm"></i> Search
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        {% endfor %}
+        <div class="col-md-9">
+            <div class="container" id="properties">
+                <div class="row g-3">
+                    {% for property in all_properties %}
+                    <div class="col-md-4 col-12">
+                        <div class="card rounded-0">
+                            <a href="{{ url_for('page.property_page', property_id=property.id) }}">
+                                {% if property.images %}
+                                <div id="carouselExampleControls{{property.id}}"
+                                     class="carousel slide carousel-fade"
+                                     data-bs-ride="carousel">
+                                    <div class="carousel-indicators">
+                                        {% for num in range(property.images|length) %}
+                                        <button type="button" data-bs-target="#carouselExampleIndicators"
+                                                data-bs-slide-to="{{ num }}"
+                                                class="active" aria-current="true" aria-label="Slide 1"></button>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="carousel-inner bg-dark">
+                                        {% for img in property.images %}
+                                        {% if loop.index == 1 %}
+                                        <div class="carousel-item active d-flex justify-content-center"  style="height:25rem;">
+                                            <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                                 alt="...">
+                                        </div>
+                                        {% else %}
+                                        <div class="carousel-item d-flex justify-content-center" style="height:25rem;">
+                                            <img src="{{ url_for('static', filename='assets/img/property_images/' + img.image_name) }}"
+                                                   alt="...">
+                                        </div>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#carouselExampleControls{{property.id}}"
+                                            data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button"
+                                            data-bs-target="#carouselExampleControls{{property.id}}"
+                                            data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                                {% else %}
+                                <div class="d-flex align-items-center w-100"  style="height:25rem;" >
+                                    <img src="{{ url_for('static', filename='assets/img/page_images/default-image.jpg') }}"
+                                         class="img-fluid"/>
+                                </div>
+                                {% endif %}
+                            </a>
+                            <div class=" card-body bg-light">
+                                <h4 class="card-title">
+                                    <a href="{{ url_for('page.property_page', property_id=property.id) }}"
+                                       class="text-success">{{ property.property_title }}</a>
+                                </h4>
+                                <p class="text-dark card-subtitle fs-6"><i class="fa-solid fa-location-dot"></i> {{
+                                    property.location }}, {{ property.city }}</p>
+                                <div class="card-footer border-0 bg-light p-0 text-dark">
+                                    <ul class="list-group list-group-horizontal">
+                                        <li class="list-group-item border-0 ps-0 py-0 bg-light"><i
+                                                class="fa-solid fa-bed fa-md"></i> {{ property.num_of_bed }}
+                                        </li>
+                                        <li class="list-group-item border-0 py-0 bg-light"><i
+                                                class="fa-solid fa-bath fa-md"></i> {{ property.num_of_bath }}
+                                        </li>
+                                        <li class="list-group-item border-0 py-0 bg-light"><i
+                                                class="fa-solid fa-car fa-md"></i> {{ property.num_of_garage }}
+                                        </li>
+                                        <li class="list-group-item border-0 py-0 bg-light"><i
+                                                class="fa-solid fa-ruler-combined fa-md"></i> {{ property.area
+                                            }}m<sup>2</sup></li>
+                                    </ul>
+                                </div>
+                                <div class="text-dark">
+                                    <div><i class="fa-solid fa-couch fa-md"></i> {{ property.furnishing }}</div>
+                                    <div><i class="fa-solid fa-money-check-dollar"></i> {{ property.payment_mode }}
+                                    </div>
+                                </div>
+                                <div class="text-success fs-4">
+                                    <i class="fa-solid fa-dollar-sign fa-sm"></i> {{ property.price }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock content %}
