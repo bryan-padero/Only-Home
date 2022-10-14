@@ -25,7 +25,7 @@ def login():
             remember_me = True if request.form.get("remember") else False
             login_user(user, remember=remember_me)
             return redirect(url_for("account.update_profile"))
-    return render_template("login_page.html", login_form=login_form, register_form=register_form)
+    return render_template("login_page.html", login_form=login_form, register_form=register_form, title_page="Login")
 
 
 @auth.route("/register", methods=["POST", "GET"])
